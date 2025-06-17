@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: never # ⚠️ Impede que scripts SQL rodem automaticamente
+
+config:
+  activate:
+    on-profile: contract-test
+
+logging:
+  level:
+    root: INFO # Desliga todos os logs
+server:
+  port: 8080

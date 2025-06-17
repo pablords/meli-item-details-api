@@ -1,0 +1,48 @@
+services:
+
+  pact-broker:
+    image: pactfoundation/pact-broker
+    ports:
+      - "9292:9292"
+    environment:
+      PACT_BROKER_DATABASE_URL: "sqlite://pacts.sqlite"
+      PACT_BROKER_DATABASE_USERNAME: "pact_user"
+      PACT_BROKER_DATABASE_PASSWORD: "password"
+
+
+  spring-template-dev:
+    container_name: spring-template-dev
+    image: pablords/spring-template-dev:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
+    ports:
+      - 8080:8080
+      - 35729:35729
+      - 5005:5005
+    # command: sleep infinity
+  spring-template:
+    container_name: spring-template
+    image: pablords/spring-template:latest
+    build: 
+      args:
+        JAR_FILE: target/spring-template-0.0.1-SNAPSHOT.jar
+    networks:
+      - services
+    volumes:
+      - ./src/main/resources/application.yml:/app/config/application.yml
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - 8080:8080
+    command: java -jar /app.jar --spring.config.location=file:/app/config/application.yml
+    # command: sleep infinity
+
+
+
+
+networks:
+  services:
+    driver: 'bridge'
