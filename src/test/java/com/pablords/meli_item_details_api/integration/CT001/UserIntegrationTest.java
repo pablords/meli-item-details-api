@@ -1,4 +1,4 @@
-package com.pablords.spring_template.integration.CT001;
+package com.pablords.meli_item_details_api.integration.CT001;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;

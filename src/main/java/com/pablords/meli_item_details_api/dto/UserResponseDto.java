@@ -1,4 +1,4 @@
-package com.pablords.spring_template.dto;
+package com.pablords.meli_item_details_api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

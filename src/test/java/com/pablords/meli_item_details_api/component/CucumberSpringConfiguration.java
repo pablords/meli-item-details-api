@@ -1,4 +1,4 @@
-package com.pablords.spring_template.component;
+package com.pablords.meli_item_details_api.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -7,7 +7,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pablords.spring_template.repository.UserRepository;
 
 import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -17,9 +16,6 @@ import io.cucumber.spring.CucumberContextConfiguration;
 @CucumberContextConfiguration
 @ActiveProfiles("component-test")
 public class CucumberSpringConfiguration {
-  @MockBean
-  private UserRepository userRepositoryMock;
-
 
   @Autowired
   private Environment environment;

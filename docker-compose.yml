@@ -10,9 +10,9 @@ services:
       PACT_BROKER_DATABASE_PASSWORD: "password"
 
 
-  spring-template-dev:
-    container_name: spring-template-dev
-    image: pablords/spring-template-dev:latest
+  meli-item-details-api-dev:
+    container_name: meli-item-details-api-dev
+    image: pablords/meli-item-details-api-dev:latest
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -22,13 +22,13 @@ services:
       - 8080:8080
       - 35729:35729
       - 5005:5005
-    # command: sleep infinity
-  spring-template:
-    container_name: spring-template
-    image: pablords/spring-template:latest
+
+  meli-item-details-api:
+    container_name: meli-item-details-api
+    image: pablords/meli-item-details-api:latest
     build: 
       args:
-        JAR_FILE: target/spring-template-0.0.1-SNAPSHOT.jar
+        JAR_FILE: target/meli-item-details-api-0.0.1-SNAPSHOT.jar
     networks:
       - services
     volumes:
@@ -38,7 +38,6 @@ services:
     ports:
       - 8080:8080
     command: java -jar /app.jar --spring.config.location=file:/app/config/application.yml
-    # command: sleep infinity
 
 
 

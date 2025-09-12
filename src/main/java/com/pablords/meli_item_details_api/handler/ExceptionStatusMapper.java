@@ -1,4 +1,4 @@
-package com.pablords.spring_template.handler;
+package com.pablords.meli_item_details_api.handler;
 
 import java.util.Map;
 

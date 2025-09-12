@@ -1,4 +1,4 @@
-package com.pablords.spring_template.component.CT001;
+package com.pablords.meli_item_details_api.component.CT001;
 
 import org.junit.runner.RunWith;
 

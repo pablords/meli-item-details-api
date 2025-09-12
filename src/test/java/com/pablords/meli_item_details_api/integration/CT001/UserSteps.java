@@ -1,25 +1,25 @@
-package com.pablords.spring_template.component.CT001;
+package com.pablords.meli_item_details_api.integration.CT001;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.pablords.spring_template.dto.UserResponseDto;
-import com.pablords.spring_template.handler.ApiError;
-import com.pablords.spring_template.model.User;
-import com.pablords.spring_template.repository.UserRepository;
+import com.pablords.meli_item_details_api.dto.UserResponseDto;
+import com.pablords.meli_item_details_api.handler.ApiError;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import io.cucumber.java.Before;
@@ -29,11 +29,11 @@ import io.cucumber.java.pt.Entao;
 
 public class UserSteps {
   @Autowired
+  private WebApplicationContext webApplicationContext;
   private MockMvc mockMvc;
-  @Autowired
-  private UserRepository userRepositoryMock;
-
   private HttpStatus responseStatus;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
   private String responseContent;
   private final String SPRING_TEMPLATE_API_URL_USERS = "/users";
   private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
@@ -41,11 +41,10 @@ public class UserSteps {
 
   @Before
   public void setUp() {
-    when(userRepositoryMock.save(any(User.class))).thenAnswer(invocation -> {
-      User user = invocation.getArgument(0);
-      user.setId("f7f6b3e3-4b7b-4b7b-8b7b-4b7b7b7b7b7b");
-      return user;
-    });
+    // Limpando a tabelas do banco H2
+    jdbcTemplate.execute("DELETE FROM users");
+
+    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
   }
 
   @Dado("que estou no endpoint da API {string}")
@@ -74,7 +73,6 @@ public class UserSteps {
     switch (HttpStatus.valueOf(status)) {
       case CREATED:
         assertNotNull(userResponseDto.getId());
-        assertEquals("f7f6b3e3-4b7b-4b7b-8b7b-4b7b7b7b7b7b", userResponseDto.getId());
         assertEquals("jhon", userResponseDto.getName());
         assertEquals("jhon@email.com", userResponseDto.getEmail());
         assertEquals(status, responseStatus.value());

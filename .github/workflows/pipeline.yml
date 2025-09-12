@@ -68,8 +68,8 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: spring-template
-          path: target/spring-template-*.jar
+          name: meli-item-details-api
+          path: target/meli-item-details-api-*.jar
 
     outputs:
       VERSION: ${{ steps.project-version.outputs.VERSION }}
@@ -88,7 +88,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
-          name: spring-template
+          name: meli-item-details-api
 
       # Debug para verificar a versão
       - name: Debug Version
@@ -105,13 +105,13 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build \
-            -t $DOCKER_REPO/spring-template:${{ needs.build.outputs.VERSION }} \
-            --build-arg JAR_FILE=spring-template-${{ needs.build.outputs.VERSION }}.jar .
+            -t $DOCKER_REPO/meli-item-details-api:${{ needs.build.outputs.VERSION }} \
+            --build-arg JAR_FILE=meli-item-details-api-${{ needs.build.outputs.VERSION }}.jar .
 
       # Push da imagem Docker para o registry
       - name: Push Docker Image
         run: |
-          docker push $DOCKER_REPO/spring-template:${{ needs.build.outputs.VERSION }}
+          docker push $DOCKER_REPO/meli-item-details-api:${{ needs.build.outputs.VERSION }}
 
   deploy:
     name: Deploy Application
