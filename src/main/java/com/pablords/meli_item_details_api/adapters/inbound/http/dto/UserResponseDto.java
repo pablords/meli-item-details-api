@@ -1,4 +1,6 @@
-package com.pablords.meli_item_details_api.adapters.http.dto;
+
+package com.pablords.meli_item_details_api.adapters.inbound.http.dto;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

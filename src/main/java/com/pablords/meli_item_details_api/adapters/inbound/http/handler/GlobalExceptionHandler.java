@@ -1,4 +1,5 @@
-package com.pablords.meli_item_details_api.adapters.http.handler;
+
+package com.pablords.meli_item_details_api.adapters.inbound.http.handler;
 
 
 import java.time.Clock;
