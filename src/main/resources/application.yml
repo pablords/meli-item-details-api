@@ -12,7 +12,7 @@ spring:
 
 
 app:
-  name: spring-template
+  name: meli-item-details-api
 
 server:
   servlet:

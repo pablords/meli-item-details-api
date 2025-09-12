@@ -10,10 +10,10 @@
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.pablords</groupId>
-  <artifactId>spring-template</artifactId>
+  <artifactId>meli-item-details-api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-template</name>
-  <description>Spring Template</description>
+  <name>meli-item-details-api</name>
+  <description>Meli Item Details API</description>
   <url />
   <licenses>
     <license />
