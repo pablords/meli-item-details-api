@@ -17,8 +17,8 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.pablords.meli_item_details_api.dto.UserResponseDto;
-import com.pablords.meli_item_details_api.handler.ApiError;
+import com.pablords.meli_item_details_api.adapters.http.dto.UserResponseDto;
+import com.pablords.meli_item_details_api.adapters.http.handler.ApiError;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 

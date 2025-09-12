@@ -1,10 +1,10 @@
-package com.pablords.meli_item_details_api.controller;
+package com.pablords.meli_item_details_api.adapters.http.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.pablords.meli_item_details_api.dto.UserRequestDto;
-import com.pablords.meli_item_details_api.dto.UserResponseDto;
-import com.pablords.meli_item_details_api.handler.ApiError;
+import com.pablords.meli_item_details_api.adapters.http.dto.UserRequestDto;
+import com.pablords.meli_item_details_api.adapters.http.dto.UserResponseDto;
+import com.pablords.meli_item_details_api.adapters.http.handler.ApiError;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
