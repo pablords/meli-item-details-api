@@ -261,7 +261,7 @@
                   src/test/resources/features
                 </cucumber.features>
                 <cucumber.glue>
-                  com.pablords.parking.component
+                  com.pablords.meli.itemdetail.component
                 </cucumber.glue>
                 <cucumber.language>pt</cucumber.language>
               </systemPropertyVariables>
@@ -301,7 +301,7 @@
                   src/test/resources/features
                 </cucumber.features>
                 <cucumber.glue>
-                  com.pablords.parking.integration
+                  com.pablords.meli.itemdetail.integration
                 </cucumber.glue>
                 <cucumber.language>pt</cucumber.language>
               </systemPropertyVariables>

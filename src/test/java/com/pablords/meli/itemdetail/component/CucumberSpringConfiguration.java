@@ -8,11 +8,19 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pablords.meli.itemdetail.adapters.outbound.file.FileProductRepositoryAdapter;
 import com.pablords.meli.itemdetail.domain.ports.outbound.repository.ProductRepositoryPort;
+import com.pablords.meli.itemdetail.domain.entity.Product;
+import com.pablords.meli.itemdetail.domain.valueobject.Money;
+import com.pablords.meli.itemdetail.domain.valueobject.Seller;
 
 import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -21,10 +29,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 public class CucumberSpringConfiguration {
 
   @MockBean
-  private FileProductRepositoryAdapter fileProductRepository;
-
-  @MockBean
-  private ProductRepositoryPort productRepository;
+  private ProductRepositoryPort productRepositoryPort;
 
   @Autowired
   private Environment environment;
@@ -32,5 +37,25 @@ public class CucumberSpringConfiguration {
   @Before
   public void setUp() {
     System.out.println("🔎 Active Profiles: " + String.join(", ", environment.getActiveProfiles()));
+    
+    // Configurar mocks para os testes
+    Product product = Product.create("12345",
+        "Smartphone XYZ",
+        "BrandA",
+        "Electronics",
+        new Money(99.99, "USD"),
+        "http://example.com/thumbnail.jpg",
+        List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"),
+        Map.of("color", "black", "memory", "128GB"),
+        10,
+        "seller123");
+
+    Seller seller = new Seller("seller123", "vendedor_exemplo", 4.5);
+
+    when(productRepositoryPort.getById("12345")).thenReturn(Optional.of(product));
+    when(productRepositoryPort.getById("99999")).thenReturn(Optional.empty());
+    when(productRepositoryPort.getSellerById("seller123")).thenReturn(Optional.of(seller));
+    
+    System.out.println("✅ Mocks configurados no CucumberSpringConfiguration");
   }
 }

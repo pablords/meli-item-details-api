@@ -25,6 +25,6 @@ Funcionalidade: Obter detalhes do produto
   @fail
   Cenário: Falha ao obter detalhes do produto - Product not found
     Dado que estou no endpoint da API "/products/{id}" com id "99999"
-    Quando eu solicito os detalhes do produto
+    Quando eu solicito os detalhes do produto com id "99999"
     Então o status da resposta deve ser 404
     E a resposta deve conter a mensagem "Product not found"
