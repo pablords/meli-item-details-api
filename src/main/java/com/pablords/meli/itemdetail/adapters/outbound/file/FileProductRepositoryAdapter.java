@@ -12,20 +12,35 @@ import com.pablords.meli.itemdetail.domain.valueobject.Seller;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import java.time.Duration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import jakarta.annotation.PostConstruct;
 
-public class FileProductRepository implements ProductRepositoryPort {
+@Component
+public class FileProductRepositoryAdapter implements ProductRepositoryPort {
   private final Map<String, Product> byId = new ConcurrentHashMap<>();
   private final Map<String, Set<String>> tokens = new ConcurrentHashMap<>();
   private final Map<String, Set<String>> byCategory = new ConcurrentHashMap<>();
   private final Map<String, Set<String>> byBrand = new ConcurrentHashMap<>();
   private final Map<String, Seller> sellers = new ConcurrentHashMap<>();
-  private final Cache<String, Product> cache;
+  private Cache<String, Product> cache;
 
-  public FileProductRepository(String productsResource, String sellersResource, Duration ttl) {
-    this.cache = Caffeine.newBuilder().expireAfterWrite(ttl).maximumSize(5000).build();
+  @Value("${dataset.products:data/products.json}")
+  String productsResource;
+  @Value("${dataset.sellers:data/sellers.json}")
+  String sellersResource;
+  @Value("${cache.ttl-ms:60000}")
+  long ttl;
+
+  public FileProductRepositoryAdapter() {
+  }
+
+  @PostConstruct
+  private void init() {
+    this.cache = Caffeine.newBuilder().expireAfterWrite(ttl, TimeUnit.MILLISECONDS).maximumSize(5000).build();
     load(productsResource, sellersResource);
   }
 
@@ -94,7 +109,7 @@ public class FileProductRepository implements ProductRepositoryPort {
   }
 
   private static InputStream getResource(String path) {
-    var is = FileProductRepository.class.getClassLoader().getResourceAsStream(path);
+    var is = FileProductRepositoryAdapter.class.getClassLoader().getResourceAsStream(path);
     if (is == null)
       throw new IllegalArgumentException("Resource not found: " + path);
     return is;
