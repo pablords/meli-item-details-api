@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 
 public class ApiErrorBuilder {
-  public static ApiError createApiError(HttpStatus status, String message, String path, Clock clock) {
-    return ApiError.builder()
+  public static ApiErrorDTO createApiError(HttpStatus status, String message, String path, Clock clock) {
+    return ApiErrorDTO.builder()
         .timestamp(LocalDateTime.now(clock))
         .error(status.getReasonPhrase())
         .message(message)

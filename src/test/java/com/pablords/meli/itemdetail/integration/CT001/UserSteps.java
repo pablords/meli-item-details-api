@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.UserResponseDto;
-import com.pablords.meli.itemdetail.adapters.inbound.http.handler.ApiError;
+import com.pablords.meli.itemdetail.adapters.inbound.http.handler.ApiErrorDTO;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -68,7 +68,7 @@ public class UserSteps {
   @Entao("o status da resposta do usuário deve ser {int}")
   public void the_response_status_should_be(int status) throws Exception {
     UserResponseDto userResponseDto = objectMapper.readValue(responseContent, UserResponseDto.class);
-    ApiError error = objectMapper.readValue(responseContent, ApiError.class);
+    ApiErrorDTO error = objectMapper.readValue(responseContent, ApiErrorDTO.class);
 
     switch (HttpStatus.valueOf(status)) {
       case CREATED:

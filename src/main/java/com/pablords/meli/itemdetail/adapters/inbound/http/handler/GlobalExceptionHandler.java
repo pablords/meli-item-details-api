@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler({ RuntimeException.class })
-  public ResponseEntity<ApiError> handleRuntimeException(RuntimeException ex, HttpServletRequest request) {
+  public ResponseEntity<ApiErrorDTO> handleRuntimeException(RuntimeException ex, HttpServletRequest request) {
     log.error(ex.getMessage(), ex);
 
     HttpStatus status = ExceptionStatusMapper.getStatus(ex.getClass());
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {
+  public ResponseEntity<ApiErrorDTO> handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {
     Map<String, String> errors = extractValidationErrors(ex);
     var error = ApiErrorBuilder.createApiError(
         HttpStatus.UNPROCESSABLE_ENTITY,
