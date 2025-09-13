@@ -22,11 +22,12 @@ import com.pablords.meli.itemdetail.domain.entity.Product;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/products")
 @Slf4j
 public class ProductController implements ProductSwagger {
   private final ProductServicePort productService;
@@ -35,8 +36,8 @@ public class ProductController implements ProductSwagger {
     this.productService = productService;
   }
 
-  @GetMapping("/products/{id}")
-  public ResponseEntity<ProductResponseDTO> getById(@PathVariable @NotBlank String id) {
+  @GetMapping("/{id}")
+  public ResponseEntity<ProductResponseDTO> getById(@PathVariable @NotBlank @Size(min = 1, max = 50) String id) {
     log.info("Fetching product details for id: {}", id);
     var productWithSeller = productService.getProductWithSeller(id);
     var product = productWithSeller.product();
@@ -64,8 +65,8 @@ public class ProductController implements ProductSwagger {
         sellerDto));
   }
 
-  @GetMapping("/products/{id}/recommendations")
-  public ResponseEntity<Map<String, List<RecomendationResponseDTO>>> recs(@PathVariable String id,
+  @GetMapping("/{id}/recommendations")
+  public ResponseEntity<Map<String, List<RecomendationResponseDTO>>> getRecommendations(@PathVariable String id,
       @RequestParam(defaultValue = "6") @Min(1) @Max(24) int limit) {
     log.info("Fetching product recommendations for id: {}", id);
     List<Product> items = productService.getRecommendations(id, limit);

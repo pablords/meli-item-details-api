@@ -7,6 +7,4 @@ import io.swagger.v3.oas.annotations.info.Info;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "Product Details API", version = "v1"))
-public class SwaggerConfig {
-	
-}
+public class SwaggerConfig {}

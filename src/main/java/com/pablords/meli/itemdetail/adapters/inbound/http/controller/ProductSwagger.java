@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Tag(name = "Product", description = "Operations related to products")
 public interface ProductSwagger {
@@ -32,14 +33,14 @@ public interface ProductSwagger {
       @ApiResponse(responseCode = "404", description = "Product not found", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)) }),
   })
-  ResponseEntity<ProductResponseDTO> getById(@PathVariable @NotBlank String id);
+  ResponseEntity<ProductResponseDTO> getById(@PathVariable @NotBlank @Size(min = 1, max = 50) String id);
 
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Recommendations found", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = RecomendationResponseDTO.class))
       })
   })
-  ResponseEntity<Map<String, List<RecomendationResponseDTO>>> recs(@PathVariable String id,
+  ResponseEntity<Map<String, List<RecomendationResponseDTO>>> getRecommendations(@PathVariable String id,
       @RequestParam(defaultValue = "6") @Min(1) @Max(24) int limit);
 
 }

@@ -9,11 +9,8 @@ import com.pablords.meli.itemdetail.domain.application.service.ProductService;
 
 @Configuration
 public class AppConfig {
-
   @Bean
   ProductServicePort productService(ProductRepositoryPort productRepository) {
     return new ProductService(productRepository);
   }
-
-
 }
