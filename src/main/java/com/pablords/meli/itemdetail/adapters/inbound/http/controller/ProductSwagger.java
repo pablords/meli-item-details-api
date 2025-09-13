@@ -1,30 +1,45 @@
 package com.pablords.meli.itemdetail.adapters.inbound.http.controller;
 
-import org.springframework.web.bind.annotation.RequestBody;
+import java.util.List;
+import java.util.Map;
 
-import com.pablords.meli.itemdetail.adapters.inbound.http.dto.UserRequestDto;
-import com.pablords.meli.itemdetail.adapters.inbound.http.dto.UserResponseDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.pablords.meli.itemdetail.adapters.inbound.http.dto.ProductResponseDTO;
+import com.pablords.meli.itemdetail.adapters.inbound.http.dto.RecomendationResponseDTO;
 import com.pablords.meli.itemdetail.adapters.inbound.http.handler.ApiErrorDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Tag(name = "Product", description = "Operations related to products")
 public interface ProductSwagger {
 
   @Operation(summary = "Get a products", tags = "Product", method = "GET", operationId = "product-get")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Valid Request", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = UserRequestDto.class), examples = @ExampleObject(value = "{\n  \"id\": \"9f6954d3-f988-4b58-bd5f-6919d3c7713c\",\n  \"name\": \"pablo\",\n  \"email\": \"pablo@email.com\"\n}")) }),
-      @ApiResponse(responseCode = "409", description = "Invalid Request", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class), examples = @ExampleObject(value = "{\"error\":\"Conflict\",\"message\":\"A email already exists: jhon@email.com\",\"path\":\"/api/v1/users\",\"timestamp\":\"2025-02-01T16:57:06Z\"}")) }),
+      @ApiResponse(responseCode = "200", description = "Product found", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ProductResponseDTO.class))
+      }),
+      @ApiResponse(responseCode = "404", description = "Product not found", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorDTO.class)) }),
   })
-  UserResponseDto create(@RequestBody @Valid UserRequestDto request);
+  ResponseEntity<ProductResponseDTO> getById(@PathVariable @NotBlank String id);
+
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Recommendations found", content = {
+          @Content(mediaType = "application/json", schema = @Schema(implementation = RecomendationResponseDTO.class))
+      })
+  })
+  ResponseEntity<Map<String, List<RecomendationResponseDTO>>> recs(@PathVariable String id,
+      @RequestParam(defaultValue = "6") @Min(1) @Max(24) int limit);
 
 }
