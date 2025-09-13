@@ -30,7 +30,9 @@ public class ProductService implements ProductServicePort {
 
   public List<Product> getRecommendations(String id, int limit) {
     log.info("Getting recommendations for product id: {}", id);
-    return repository.recommendations(id, limit);
+    var recommendations = repository.recommendations(id, limit);
+    log.info("Recommendations found: {}", recommendations.size());
+    return recommendations;
   }
 
   public SearchResult getSearch(String query, int limit, int offset) {

@@ -67,7 +67,9 @@ public class ProductController implements ProductSwagger {
   @GetMapping("/products/{id}/recommendations")
   public ResponseEntity<Map<String, List<RecomendationResponseDTO>>> recs(@PathVariable String id,
       @RequestParam(defaultValue = "6") @Min(1) @Max(24) int limit) {
+    log.info("Fetching product recommendations for id: {}", id);
     List<Product> items = productService.getRecommendations(id, limit);
+    log.info("Product recommendations fetched successfully for id: {}", id);
     return ResponseEntity.status(HttpStatus.OK)
         .body(Map.of("items", items.stream().map(RecomendationResponseDTO::from).toList()));
   }

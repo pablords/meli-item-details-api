@@ -1,4 +1,4 @@
-package com.pablords.meli.itemdetail.component.CT001;
+package com.pablords.meli.itemdetail.component.CT002;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -8,14 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.pablords.meli.itemdetail.utils.DataTableValidator;
+import com.pablords.meli.itemdetail.utils.StringCountList;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.pt.*;
 
-
-
-public class ProductDetailsSteps {
+public class ProductRecommendationsSteps {
   @Autowired
   private MockMvc mockMvc;
 
@@ -23,14 +20,14 @@ public class ProductDetailsSteps {
   private String responseContent;
   private String PRODUCT_DETAILS_API_URL;
 
-  @Dado("que estou no endpoint da API de detalhes {string} com id {string}")
+  @Dado("que estou no endpoint da API de recomendações {string} com id {string}")
   public void que_estou_no_endpoint_da_api_com_id(String endpoint, String id) {
     this.PRODUCT_DETAILS_API_URL = endpoint.replace("{id}", id);
   }
 
-  @Quando("eu solicito os detalhes do produto com id {string}")
-  public void eu_solicito_os_detalhes_do_produto(String id) throws Exception {
-    this.PRODUCT_DETAILS_API_URL = "/api/v1/products" + "/" + id;
+  @Quando("eu solicito as recomendações de produtos para o id {string}")
+  public void eu_solicito_as_recomendacoes_de_produtos_para_o_id(String id) throws Exception {
+    this.PRODUCT_DETAILS_API_URL = "/api/v1/products/" + id + "/recommendations";
     System.out.println("Fazendo chamada para URL: " + PRODUCT_DETAILS_API_URL);
     mockMvc.perform(get(PRODUCT_DETAILS_API_URL)
         .contentType(MediaType.APPLICATION_JSON))
@@ -41,7 +38,7 @@ public class ProductDetailsSteps {
         });
   }
 
-  @Entao("o status da resposta de detalhes deve ser {int}")
+  @Entao("o status da resposta de recomendações deve ser {int}")
   public void o_status_da_resposta_deve_ser(Integer statusCode) {
     System.out.println("Response data: " + responseContent);
 
@@ -52,8 +49,8 @@ public class ProductDetailsSteps {
       case NOT_FOUND:
         assertEquals(HttpStatus.NOT_FOUND, responseStatus);
         // Valida que a resposta contém a mensagem de erro esperada
-        assert responseContent.contains("\"message\":\"Product not found\"") : 
-          "Expected error message not found in response: " + responseContent;
+        assert responseContent.contains("\"message\":\"Product not found\"")
+            : "Expected error message not found in response: " + responseContent;
         break;
       default:
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), responseStatus.value());
@@ -61,16 +58,20 @@ public class ProductDetailsSteps {
     }
   }
 
-  @E("a resposta deve conter os seguintes detalhes do produto:")
-  public void a_resposta_deve_conter_os_seguintes_detalhes_do_produto(DataTable dataTable) {
-    DataTableValidator.validateResponseWithDataTable(dataTable, responseContent);
+  @E("a resposta deve conter uma lista de recomendações de produtos com {int} itens")
+  public void a_resposta_deve_conter_uma_lista_de_recomendacoes_de_produtos(int expectedItemCount) {
+    int actualItemCount = StringCountList.countItemsSimple(responseContent);
+    assertEquals(expectedItemCount, actualItemCount);
+    System.out.println("✅ Expected " + expectedItemCount + " items, found " + actualItemCount);
   }
 
-  @E("a resposta deve conter a mensagem {string}")
-  public void a_resposta_deve_conter_a_mensagem(String expectedMessage) {
-    DataTableValidator.validateJsonResponseNotEmpty(responseContent);
-    DataTableValidator.validateStringField("message", expectedMessage, responseContent);
+  @E("a resposta deve conter uma lista vazia de recomendações de produtos")
+  public void a_resposta_deve_conter_uma_lista_vazia_de_recomendacoes_de_produtos() {
+    int actualItemCount = StringCountList.countItemsSimple(responseContent);
+    assertEquals(0, actualItemCount);
+    System.out.println("✅ Expected empty list, found " + actualItemCount + " items");
   }
+
 
 
 }

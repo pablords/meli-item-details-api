@@ -1,6 +1,6 @@
 #language: pt 
 
-@user @CT001
+@PRODUCTS @CT001
 Funcionalidade: Obter detalhes do produto
   Como um usuário do sistema
   Eu quero ser capaz de obter detalhes do produto
@@ -8,9 +8,9 @@ Funcionalidade: Obter detalhes do produto
 
   @success
   Cenário: Obtendo detalhes do produto com sucesso
-    Dado que estou no endpoint da API "/products/{id}" com id "12345"
+    Dado que estou no endpoint da API de detalhes "/api/v1/products/{id}" com id "12345"
     Quando eu solicito os detalhes do produto com id "12345"
-    Então o status da resposta deve ser 200
+    Então o status da resposta de detalhes deve ser 200
     E a resposta deve conter os seguintes detalhes do produto:
       | id          | 12345                     |
       | title       | "Smartphone XYZ"         |
@@ -22,7 +22,7 @@ Funcionalidade: Obter detalhes do produto
 
   @fail
   Cenário: Falha ao obter detalhes do produto - Product not found
-    Dado que estou no endpoint da API "/products/{id}" com id "99999"
+    Dado que estou no endpoint da API de detalhes "/api/v1/products/{id}" com id "99999"
     Quando eu solicito os detalhes do produto com id "99999"
-    Então o status da resposta deve ser 404
+    Então o status da resposta de detalhes deve ser 404
     E a resposta deve conter a mensagem "Product not found"

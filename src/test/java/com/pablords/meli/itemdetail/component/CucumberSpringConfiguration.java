@@ -1,6 +1,5 @@
 package com.pablords.meli.itemdetail.component;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,9 +36,21 @@ public class CucumberSpringConfiguration {
   @Before
   public void setUp() {
     System.out.println("🔎 Active Profiles: " + String.join(", ", environment.getActiveProfiles()));
-    
+
     // Configurar mocks para os testes
-    Product product = Product.create("12345",
+    Product product1 = Product.create("12345",
+        "Smartphone XYZ",
+        "BrandA",
+        "Electronics",
+        new Money(99.99, "USD"),
+        "http://example.com/thumbnail.jpg",
+        List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"),
+        Map.of("color", "black", "memory", "128GB"),
+        10,
+        "seller123");
+
+    Product product2 = Product.create(
+        "54321",
         "Smartphone XYZ",
         "BrandA",
         "Electronics",
@@ -52,10 +63,14 @@ public class CucumberSpringConfiguration {
 
     Seller seller = new Seller("seller123", "vendedor_exemplo", 4.5);
 
-    when(productRepositoryPort.getById("12345")).thenReturn(Optional.of(product));
+    when(productRepositoryPort.getById("12345")).thenReturn(Optional.of(product1));
     when(productRepositoryPort.getById("99999")).thenReturn(Optional.empty());
     when(productRepositoryPort.getSellerById("seller123")).thenReturn(Optional.of(seller));
-    
+
+    List<Product> products = List.of(product1, product2);
+    when(productRepositoryPort.recommendations("12345", 6)).thenReturn(products);
+    when(productRepositoryPort.recommendations("99999", 6)).thenReturn(List.of());
+
     System.out.println("✅ Mocks configurados no CucumberSpringConfiguration");
   }
 }
