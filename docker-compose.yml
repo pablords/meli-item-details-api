@@ -1,14 +1,5 @@
 services:
 
-  pact-broker:
-    image: pactfoundation/pact-broker
-    ports:
-      - "9292:9292"
-    environment:
-      PACT_BROKER_DATABASE_URL: "sqlite://pacts.sqlite"
-      PACT_BROKER_DATABASE_USERNAME: "pact_user"
-      PACT_BROKER_DATABASE_PASSWORD: "password"
-
 
   meli-item-details-api-dev:
     container_name: meli-item-details-api-dev
@@ -29,8 +20,6 @@ services:
     build: 
       args:
         JAR_FILE: target/meli-item-details-api-0.0.1-SNAPSHOT.jar
-    networks:
-      - services
     volumes:
       - ./src/main/resources/application.yml:/app/config/application.yml
     environment:
@@ -41,7 +30,3 @@ services:
 
 
 
-
-networks:
-  services:
-    driver: 'bridge'

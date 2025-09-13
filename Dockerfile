@@ -1,11 +1,8 @@
-# Use uma imagem base do JDK
+FROM maven:3.9.4-openjdk-17 AS build
+COPY . /app
+WORKDIR /app
+RUN mvn clean package -DskipTests
+
 FROM openjdk:17-jdk-slim
-
-# Define o nome do arquivo JAR como argumento
-ARG JAR_FILE
-
-# Copia o arquivo JAR gerado para a imagem
-COPY ${JAR_FILE} app.jar
-
-# Define o comando de inicialização
+COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
