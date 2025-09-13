@@ -8,8 +8,8 @@ Funcionalidade: Obter recomendações de produtos
 
   @success
   Cenário: Obtendo recomendações de produtos com sucesso
-    Dado que estou no endpoint da API de recomendações "/products/{id}/recommendations" com id "12345"
-    Quando eu solicito as recomendações de produtos para o id "12345"
+    Dado que estou no endpoint da API de recomendações "/products/{id}/recommendations" com id "MLB001"
+    Quando eu solicito as recomendações de produtos para o id "MLB001"
     Então o status da resposta de recomendações deve ser 200
     E a resposta deve conter uma lista de recomendações de produtos com 2 itens
 

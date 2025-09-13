@@ -5,7 +5,7 @@ server:
       
 config:
   activate:
-    on-profile: component-test
+    on-profile: integration-test
 
 logging:
   level:

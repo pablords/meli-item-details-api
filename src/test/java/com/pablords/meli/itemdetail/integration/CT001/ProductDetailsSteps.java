@@ -1,89 +1,77 @@
-// package com.pablords.meli.itemdetail.integration.CT001;
+package com.pablords.meli.itemdetail.integration.CT001;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-// import java.nio.file.Files;
-// import java.nio.file.Paths;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.MediaType;
-// import org.springframework.jdbc.core.JdbcTemplate;
-// import org.springframework.test.web.servlet.MockMvc;
-// import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-// import org.springframework.web.context.WebApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
-// import com.fasterxml.jackson.databind.ObjectMapper;
-// import com.fasterxml.jackson.databind.SerializationFeature;
-// import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-// import com.pablords.meli.itemdetail.adapters.inbound.http.dto.ProductResponseDTO;
-// import com.pablords.meli.itemdetail.adapters.inbound.http.handler.ApiErrorDTO;
+import com.pablords.meli.itemdetail.utils.DataTableValidator;
 
-// import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.pt.*;
 
-// import io.cucumber.java.Before;
-// import io.cucumber.java.es.Dado;
-// import io.cucumber.java.it.Quando;
-// import io.cucumber.java.pt.Entao;
 
-// public class ProductDetailsSteps {
-//   @Autowired
-//   private WebApplicationContext webApplicationContext;
-//   private MockMvc mockMvc;
-//   private HttpStatus responseStatus;
 
-//   private String responseContent;
-//   private final String MELI_ITEMDETAIL_API_URL_PRODUCTS = "/products";
-//   private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
-//       .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+public class ProductDetailsSteps {
+  @Autowired
+  private MockMvc mockMvc;
 
-//   @Before
-//   public void setUp() {
+  private HttpStatus responseStatus;
+  private String responseContent;
+  private String PRODUCT_DETAILS_API_URL;
 
-//     mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-//   }
+  @Dado("que estou no endpoint da API de detalhes {string} com id {string}")
+  public void que_estou_no_endpoint_da_api_com_id(String endpoint, String id) {
+    this.PRODUCT_DETAILS_API_URL = endpoint.replace("{id}", id);
+  }
 
-//   @Dado("que estou no endpoint da API {string}")
-//   public void that_i_am_in_the_api_endpoint(String endpoint) {
-//     assertEquals(endpoint, MELI_ITEMDETAIL_API_URL_PRODUCTS);
-//   }
+  @Quando("eu solicito os detalhes do produto com id {string}")
+  public void eu_solicito_os_detalhes_do_produto(String id) throws Exception {
+    this.PRODUCT_DETAILS_API_URL = "/products" + "/" + id;
+    System.out.println("Fazendo chamada para URL: " + PRODUCT_DETAILS_API_URL);
+    mockMvc.perform(get(PRODUCT_DETAILS_API_URL)
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(result -> {
+          responseStatus = HttpStatus.valueOf(result.getResponse().getStatus());
+          responseContent = result.getResponse().getContentAsString();
+          System.out.println("Status: " + responseStatus + ", Content: " + responseContent);
+        });
+  }
 
-//   @Quando("eu crio um produto com os seguintes detalhes: {string}")
-//   public void i_create_a_product_with_the_following_details(String jsonPath) throws Exception {
-//     var jsonFileContent = new String(Files.readAllBytes(Paths.get(jsonPath)));
+  @Entao("o status da resposta de detalhes deve ser {int}")
+  public void o_status_da_resposta_deve_ser(Integer statusCode) {
+    System.out.println("Response data: " + responseContent);
 
-//     mockMvc.perform(post(MELI_ITEMDETAIL_API_URL_PRODUCTS)
-//         .contentType(MediaType.APPLICATION_JSON)
-//         .content(jsonFileContent))
-//         .andExpect(result -> {
-//           responseStatus = HttpStatus.valueOf(result.getResponse().getStatus());
-//           responseContent = result.getResponse().getContentAsString();
-//         });
-//   }
+    switch (HttpStatus.valueOf(statusCode)) {
+      case OK:
+        assertEquals(HttpStatus.OK, responseStatus);
+        break;
+      case NOT_FOUND:
+        assertEquals(HttpStatus.NOT_FOUND, responseStatus);
+        // Valida que a resposta contém a mensagem de erro esperada
+        assert responseContent.contains("\"message\":\"Product not found\"") : 
+          "Expected error message not found in response: " + responseContent;
+        break;
+      default:
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), responseStatus.value());
+        break;
+    }
+  }
 
-//   @Entao("o status da resposta do usuário deve ser {int}")
-//   public void the_response_status_should_be(int status) throws Exception {
-//     ProductResponseDTO userResponseDto = objectMapper.readValue(responseContent, ProductResponseDTO.class);
-//     ApiErrorDTO error = objectMapper.readValue(responseContent, ApiErrorDTO.class);
+  @E("a resposta deve conter os seguintes detalhes do produto:")
+  public void a_resposta_deve_conter_os_seguintes_detalhes_do_produto(DataTable dataTable) {
+    DataTableValidator.validateResponseWithDataTable(dataTable, responseContent);
+  }
 
-//     switch (HttpStatus.valueOf(status)) {
-//       case CREATED:
-//         assertNotNull(userResponseDto.getId());
-//         assertEquals("jhon", userResponseDto.getName());
-//         assertEquals("jhon@email.com", userResponseDto.getEmail());
-//         assertEquals(status, responseStatus.value());
-//         break;
-//       case UNPROCESSABLE_ENTITY:
-//         assertNotNull(error.getErrors());
-//         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase(), error.getError());
-//         assertEquals("Validation error", error.getMessage());
-//         assertEquals("Name cannot be empty", error.getErrors().get("name"));
-//         assertEquals(status, responseStatus.value());
-//         break;
-//       default:
-//         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), responseStatus.value());
-//         break;
-//     }
-//   }
-// }
+  @E("a resposta deve conter a mensagem {string}")
+  public void a_resposta_deve_conter_a_mensagem(String expectedMessage) {
+    DataTableValidator.validateJsonResponseNotEmpty(responseContent);
+    DataTableValidator.validateStringField("message", expectedMessage, responseContent);
+  }
+
+
+}

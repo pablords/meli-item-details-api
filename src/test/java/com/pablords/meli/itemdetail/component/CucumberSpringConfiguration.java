@@ -38,37 +38,36 @@ public class CucumberSpringConfiguration {
     System.out.println("🔎 Active Profiles: " + String.join(", ", environment.getActiveProfiles()));
 
     // Configurar mocks para os testes
-    Product product1 = Product.create("12345",
-        "Smartphone XYZ",
-        "BrandA",
-        "Electronics",
-        new Money(99.99, "USD"),
-        "http://example.com/thumbnail.jpg",
-        List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"),
-        Map.of("color", "black", "memory", "128GB"),
-        10,
-        "seller123");
+    Product product1 = Product.create("MLB001",
+        "Smartphone Samsung Galaxy S24 Ultra 256GB",
+        "Samsung",
+        "Celulares",
+        new Money(4999.99, "BRL"),
+        "https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg",
+        List.of("https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg", "https://http2.mlstatic.com/D_Q_NP_123457_MLB.jpg"),
+        Map.of("Memoria", "256GB"),
+        25,
+        "SELLER001");
 
-    Product product2 = Product.create(
-        "54321",
-        "Smartphone XYZ",
-        "BrandA",
-        "Electronics",
-        new Money(99.99, "USD"),
-        "http://example.com/thumbnail.jpg",
-        List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"),
-        Map.of("color", "black", "memory", "128GB"),
-        10,
-        "seller123");
+    Product product2 = Product.create("MLB002",
+        "iPhone 15 Pro Max 256GB Titânio Natural",
+        "Apple",
+        "Celulares",
+        new Money(8999.99, "BRL"),
+        "https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg",
+        List.of("https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg", "https://http2.mlstatic.com/D_Q_NP_223457_MLB.jpg"),
+        Map.of("Memoria", "256GB"),
+        15,
+        "SELLER002");
 
-    Seller seller = new Seller("seller123", "vendedor_exemplo", 4.5);
+    Seller seller = new Seller("SELLER001", "TechMaster_SP", 4.8);
 
-    when(fileProductRepositoryAdapter.getById("12345")).thenReturn(Optional.of(product1));
+    when(fileProductRepositoryAdapter.getById("MLB001")).thenReturn(Optional.of(product1));
     when(fileProductRepositoryAdapter.getById("99999")).thenReturn(Optional.empty());
-    when(fileProductRepositoryAdapter.getSellerById("seller123")).thenReturn(Optional.of(seller));
+    when(fileProductRepositoryAdapter.getSellerById("SELLER001")).thenReturn(Optional.of(seller));
 
     List<Product> products = List.of(product1, product2);
-    when(fileProductRepositoryAdapter.recommendations("12345", 6)).thenReturn(products);
+    when(fileProductRepositoryAdapter.recommendations("MLB001", 6)).thenReturn(products);
     when(fileProductRepositoryAdapter.recommendations("99999", 6)).thenReturn(List.of());
 
     System.out.println("✅ Mocks configurados no CucumberSpringConfiguration");

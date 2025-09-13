@@ -8,17 +8,17 @@ Funcionalidade: Obter detalhes do produto
 
   @success
   Cenário: Obtendo detalhes do produto com sucesso
-    Dado que estou no endpoint da API de detalhes "/api/v1/products/{id}" com id "12345"
-    Quando eu solicito os detalhes do produto com id "12345"
+    Dado que estou no endpoint da API de detalhes "/api/v1/products/{id}" com id "MLB001"
+    Quando eu solicito os detalhes do produto com id "MLB001"
     Então o status da resposta de detalhes deve ser 200
     E a resposta deve conter os seguintes detalhes do produto:
-      | id          | 12345                     |
-      | title       | "Smartphone XYZ"         |
-      | price       | 99.99                     |
-      | currency    | "USD"                     |
-      | available_quantity | 10                  |
-      | pictures    | ["url1", "url2"]          |
-      | seller_id   | "seller123"               |
+      | id          | MLB001                     |
+      | title       | "Smartphone Samsung Galaxy S24 Ultra 256GB"         |
+      | price       | 4999.99                 |
+      | currency    | "BRL"                     |
+      | available_quantity | 25                  |
+      | pictures    | ["https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg", "https://http2.mlstatic.com/D_Q_NP_123457_MLB.jpg"]          |
+      | seller_id   | "SELLER001"               |
 
   @fail
   Cenário: Falha ao obter detalhes do produto - Product not found
