@@ -1,0 +1,252 @@
+[
+  {
+    "id": "SELLER001",
+    "nickname": "TechMaster_SP",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER002",
+    "nickname": "AppleStore_BR",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER003",
+    "nickname": "NotebookExpress",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER004",
+    "nickname": "EletroMundo_RJ",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER005",
+    "nickname": "AudioMax_Store",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER006",
+    "nickname": "GameZone_Brasil",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER007",
+    "nickname": "SneakerHub_SP",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER008",
+    "nickname": "CafeGourmet_MG",
+    "rating": 4.5
+  },
+  {
+    "id": "SELLER009",
+    "nickname": "Livraria_Central",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER010",
+    "nickname": "Fashion_Outlet",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER011",
+    "nickname": "GamerProShop",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER012",
+    "nickname": "WearableTech_BR",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER013",
+    "nickname": "Perfumaria_Luxo",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER014",
+    "nickname": "MoveisGamer_RS",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER015",
+    "nickname": "CasaUtilidades",
+    "rating": 4.5
+  },
+  {
+    "id": "SELLER016",
+    "nickname": "TabletCenter_SP",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER017",
+    "nickname": "MochilaShop_BR",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER018",
+    "nickname": "BikeExpert_SC",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER019",
+    "nickname": "EletroLar_PR",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER020",
+    "nickname": "MusicStore_BA",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER021",
+    "nickname": "OculosStyle_RJ",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER022",
+    "nickname": "BrinquedoLand",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER023",
+    "nickname": "LavarElevar_MG",
+    "rating": 4.5
+  },
+  {
+    "id": "SELLER024",
+    "nickname": "PCComponents_GO",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER025",
+    "nickname": "ClimaConfort_PE",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER026",
+    "nickname": "GeladeiraPro_DF",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER027",
+    "nickname": "RunningShoes_ES",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER028",
+    "nickname": "CozinhaPerfeita",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER029",
+    "nickname": "GraphicsCard_MT",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER030",
+    "nickname": "PrintSolutions_CE",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER031",
+    "nickname": "SmartHome_AL",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER032",
+    "nickname": "GamerSetup_PB",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER033",
+    "nickname": "NintendoBrasil_RN",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER034",
+    "nickname": "VentiladorTop_PI",
+    "rating": 4.5
+  },
+  {
+    "id": "SELLER035",
+    "nickname": "SomPortatil_MA",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER036",
+    "nickname": "ColchaoConfort_TO",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER037",
+    "nickname": "PanelaFacil_AP",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER038",
+    "nickname": "XiaomiOficial_RR",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER039",
+    "nickname": "FerroVapor_AC",
+    "rating": 4.5
+  },
+  {
+    "id": "SELLER040",
+    "nickname": "TecladoPro_RO",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER041",
+    "nickname": "LiquidificadorMax_AM",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER042",
+    "nickname": "FitnessEquip_SE",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER043",
+    "nickname": "CameraShop_MS",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER044",
+    "nickname": "AguaPura_MT",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER045",
+    "nickname": "MonitorGamer_GO",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER046",
+    "nickname": "BelezaCabelo_DF",
+    "rating": 4.7
+  },
+  {
+    "id": "SELLER047",
+    "nickname": "SupplementPro_SP",
+    "rating": 4.8
+  },
+  {
+    "id": "SELLER048",
+    "nickname": "SmartLight_RJ",
+    "rating": 4.6
+  },
+  {
+    "id": "SELLER049",
+    "nickname": "CoolingMaster_MG",
+    "rating": 4.9
+  },
+  {
+    "id": "SELLER050",
+    "nickname": "AirFryerBrasil_RS",
+    "rating": 4.7
+  }
+]

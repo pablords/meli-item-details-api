@@ -1,0 +1,1152 @@
+[
+  {
+    "id": "MLB001",
+    "title": "Smartphone Samsung Galaxy S24 Ultra 256GB",
+    "brand": "Samsung",
+    "category": "Celulares",
+    "price": {
+      "amount": 4999.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_123457_MLB.jpg"
+    ],
+    "attributes": {
+      "Memoria": "256GB",
+      "RAM": "12GB",
+      "Tela": "6.8 polegadas",
+      "Camera": "200MP"
+    },
+    "available_quantity": 25,
+    "seller_id": "SELLER001"
+  },
+  {
+    "id": "MLB002",
+    "title": "iPhone 15 Pro Max 256GB Titânio Natural",
+    "brand": "Apple",
+    "category": "Celulares",
+    "price": {
+      "amount": 8999.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_223457_MLB.jpg"
+    ],
+    "attributes": {
+      "Memoria": "256GB",
+      "RAM": "8GB",
+      "Tela": "6.7 polegadas",
+      "Camera": "48MP"
+    },
+    "available_quantity": 15,
+    "seller_id": "SELLER002"
+  },
+  {
+    "id": "MLB003",
+    "title": "Notebook Dell Inspiron 15 i5 8GB SSD 256GB",
+    "brand": "Dell",
+    "category": "Computadores",
+    "price": {
+      "amount": 2899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_323456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_323456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_323457_MLB.jpg"
+    ],
+    "attributes": {
+      "Processador": "Intel i5",
+      "RAM": "8GB",
+      "Armazenamento": "256GB SSD",
+      "Tela": "15.6 polegadas"
+    },
+    "available_quantity": 30,
+    "seller_id": "SELLER003"
+  },
+  {
+    "id": "MLB004",
+    "title": "Smart TV LG 55 4K UHD OLED C3",
+    "brand": "LG",
+    "category": "Eletrônicos",
+    "price": {
+      "amount": 6999.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_423456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_423456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_423457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tamanho": "55 polegadas",
+      "Resolução": "4K UHD",
+      "Tecnologia": "OLED",
+      "Sistema": "WebOS"
+    },
+    "available_quantity": 12,
+    "seller_id": "SELLER004"
+  },
+  {
+    "id": "MLB005",
+    "title": "Fone de Ouvido Sony WH-1000XM5 Bluetooth",
+    "brand": "Sony",
+    "category": "Áudio",
+    "price": {
+      "amount": 1899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_523456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_523456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_523457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tipo": "Over-ear",
+      "Conectividade": "Bluetooth 5.2",
+      "Cancelamento": "Ativo",
+      "Bateria": "30 horas"
+    },
+    "available_quantity": 45,
+    "seller_id": "SELLER005"
+  },
+  {
+    "id": "MLB006",
+    "title": "PlayStation 5 Console + Controle DualSense",
+    "brand": "Sony",
+    "category": "Games",
+    "price": {
+      "amount": 4299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_623456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_623456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_623457_MLB.jpg"
+    ],
+    "attributes": {
+      "Armazenamento": "825GB SSD",
+      "Resolução": "4K 120fps",
+      "Ray Tracing": "Sim",
+      "Mídia": "Blu-ray Ultra HD"
+    },
+    "available_quantity": 8,
+    "seller_id": "SELLER006"
+  },
+  {
+    "id": "MLB007",
+    "title": "Tênis Nike Air Max 270 Masculino",
+    "brand": "Nike",
+    "category": "Calçados",
+    "price": {
+      "amount": 699.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_723456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_723456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_723457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tamanho": "42",
+      "Cor": "Preto/Branco",
+      "Material": "Mesh/Couro sintético",
+      "Tipo": "Casual/Esportivo"
+    },
+    "available_quantity": 60,
+    "seller_id": "SELLER007"
+  },
+  {
+    "id": "MLB008",
+    "title": "Cafeteira Nespresso Essenza Mini Preta",
+    "brand": "Nespresso",
+    "category": "Casa e Cozinha",
+    "price": {
+      "amount": 349.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_823456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_823456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_823457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tipo": "Cápsulas",
+      "Cor": "Preta",
+      "Capacidade": "0.6L",
+      "Pressão": "19 bar"
+    },
+    "available_quantity": 35,
+    "seller_id": "SELLER008"
+  },
+  {
+    "id": "MLB009",
+    "title": "Livro O Alquimista - Paulo Coelho",
+    "brand": "Rocco",
+    "category": "Livros",
+    "price": {
+      "amount": 29.90,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_923456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_923456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_923457_MLB.jpg"
+    ],
+    "attributes": {
+      "Autor": "Paulo Coelho",
+      "Páginas": "163",
+      "Idioma": "Português",
+      "Editora": "Rocco"
+    },
+    "available_quantity": 100,
+    "seller_id": "SELLER009"
+  },
+  {
+    "id": "MLB010",
+    "title": "Camiseta Adidas Originals Trefoil Preta",
+    "brand": "Adidas",
+    "category": "Roupas",
+    "price": {
+      "amount": 149.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1023456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1023456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1023457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tamanho": "M",
+      "Cor": "Preta",
+      "Material": "100% Algodão",
+      "Estilo": "Casual"
+    },
+    "available_quantity": 80,
+    "seller_id": "SELLER010"
+  },
+  {
+    "id": "MLB011",
+    "title": "Mouse Gamer Logitech G Pro X Superlight",
+    "brand": "Logitech",
+    "category": "Periféricos",
+    "price": {
+      "amount": 799.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1123456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1123456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1123457_MLB.jpg"
+    ],
+    "attributes": {
+      "DPI": "25600",
+      "Conectividade": "Wireless",
+      "Peso": "63g",
+      "Sensor": "HERO 25K"
+    },
+    "available_quantity": 40,
+    "seller_id": "SELLER011"
+  },
+  {
+    "id": "MLB012",
+    "title": "Relógio Apple Watch Series 9 GPS 45mm",
+    "brand": "Apple",
+    "category": "Wearables",
+    "price": {
+      "amount": 3299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1223456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1223456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1223457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tamanho": "45mm",
+      "Conectividade": "GPS",
+      "Resistência": "Água 50m",
+      "Tela": "Always-On Retina"
+    },
+    "available_quantity": 20,
+    "seller_id": "SELLER012"
+  },
+  {
+    "id": "MLB013",
+    "title": "Perfume Chanel No. 5 Eau de Parfum 100ml",
+    "brand": "Chanel",
+    "category": "Perfumes",
+    "price": {
+      "amount": 899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1323456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1323456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1323457_MLB.jpg"
+    ],
+    "attributes": {
+      "Volume": "100ml",
+      "Tipo": "Eau de Parfum",
+      "Gênero": "Feminino",
+      "Família": "Floral"
+    },
+    "available_quantity": 15,
+    "seller_id": "SELLER013"
+  },
+  {
+    "id": "MLB014",
+    "title": "Cadeira Gamer Razer Iskur X Preta",
+    "brand": "Razer",
+    "category": "Móveis",
+    "price": {
+      "amount": 1899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1423456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1423456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1423457_MLB.jpg"
+    ],
+    "attributes": {
+      "Material": "Couro sintético",
+      "Peso máximo": "136kg",
+      "Ajuste": "Altura e inclinação",
+      "Cor": "Preta com verde"
+    },
+    "available_quantity": 18,
+    "seller_id": "SELLER014"
+  },
+  {
+    "id": "MLB015",
+    "title": "Kit Panelas Tramontina Allegra Antiaderente",
+    "brand": "Tramontina",
+    "category": "Casa e Cozinha",
+    "price": {
+      "amount": 299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1523456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1523456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1523457_MLB.jpg"
+    ],
+    "attributes": {
+      "Peças": "5 panelas",
+      "Revestimento": "Antiaderente",
+      "Material": "Alumínio",
+      "Cor": "Vermelha"
+    },
+    "available_quantity": 50,
+    "seller_id": "SELLER015"
+  },
+  {
+    "id": "MLB016",
+    "title": "Tablet Samsung Galaxy Tab S9 256GB Wi-Fi",
+    "brand": "Samsung",
+    "category": "Tablets",
+    "price": {
+      "amount": 3499.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1623456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1623456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1623457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tela": "11 polegadas",
+      "Armazenamento": "256GB",
+      "RAM": "12GB",
+      "Sistema": "Android 13"
+    },
+    "available_quantity": 22,
+    "seller_id": "SELLER016"
+  },
+  {
+    "id": "MLB017",
+    "title": "Mochila Jansport SuperBreak Azul Marinho",
+    "brand": "Jansport",
+    "category": "Bolsas e Mochilas",
+    "price": {
+      "amount": 199.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1723456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1723456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1723457_MLB.jpg"
+    ],
+    "attributes": {
+      "Capacidade": "25L",
+      "Material": "Poliéster",
+      "Cor": "Azul marinho",
+      "Compartimentos": "1 principal + 1 frontal"
+    },
+    "available_quantity": 75,
+    "seller_id": "SELLER017"
+  },
+  {
+    "id": "MLB018",
+    "title": "Bicicleta Caloi Elite Carbon Road 16v",
+    "brand": "Caloi",
+    "category": "Esportes",
+    "price": {
+      "amount": 8999.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1823456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1823456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1823457_MLB.jpg"
+    ],
+    "attributes": {
+      "Quadro": "Fibra de carbono",
+      "Marchas": "16 velocidades",
+      "Freios": "Disco hidráulico",
+      "Tamanho": "54cm"
+    },
+    "available_quantity": 5,
+    "seller_id": "SELLER018"
+  },
+  {
+    "id": "MLB019",
+    "title": "Micro-ondas Electrolux 31L Espelhado MEO41",
+    "brand": "Electrolux",
+    "category": "Eletrodomésticos",
+    "price": {
+      "amount": 699.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_1923456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_1923456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_1923457_MLB.jpg"
+    ],
+    "attributes": {
+      "Capacidade": "31 litros",
+      "Potência": "800W",
+      "Função": "Descongelar/Aquecer",
+      "Cor": "Espelhado"
+    },
+    "available_quantity": 28,
+    "seller_id": "SELLER019"
+  },
+  {
+    "id": "MLB020",
+    "title": "Violão Yamaha F310 Folk Aço Natural",
+    "brand": "Yamaha",
+    "category": "Instrumentos Musicais",
+    "price": {
+      "amount": 899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2023456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2023456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2023457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tipo": "Folk",
+      "Cordas": "Aço",
+      "Tampo": "Spruce",
+      "Cor": "Natural"
+    },
+    "available_quantity": 12,
+    "seller_id": "SELLER020"
+  },
+  {
+    "id": "MLB021",
+    "title": "Óculos Ray-Ban Aviador Dourado RB3025",
+    "brand": "Ray-Ban",
+    "category": "Acessórios",
+    "price": {
+      "amount": 599.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2123456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2123456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2123457_MLB.jpg"
+    ],
+    "attributes": {
+      "Modelo": "Aviador",
+      "Proteção": "UV400",
+      "Armação": "Metal dourado",
+      "Lente": "G-15"
+    },
+    "available_quantity": 33,
+    "seller_id": "SELLER021"
+  },
+  {
+    "id": "MLB022",
+    "title": "Boneca Barbie Dreamhouse Adventures",
+    "brand": "Mattel",
+    "category": "Brinquedos",
+    "price": {
+      "amount": 149.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2223456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2223456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2223457_MLB.jpg"
+    ],
+    "attributes": {
+      "Idade": "3+ anos",
+      "Altura": "29cm",
+      "Cabelo": "Loiro longo",
+      "Acessórios": "Roupinha rosa"
+    },
+    "available_quantity": 65,
+    "seller_id": "SELLER022"
+  },
+  {
+    "id": "MLB023",
+    "title": "Máquina de Lavar Brastemp 12kg BWK12A",
+    "brand": "Brastemp",
+    "category": "Eletrodomésticos",
+    "price": {
+      "amount": 2299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2323456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2323456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2323457_MLB.jpg"
+    ],
+    "attributes": {
+      "Capacidade": "12kg",
+      "Tipo": "Automática",
+      "Programas": "12 opções",
+      "Cor": "Branca"
+    },
+    "available_quantity": 10,
+    "seller_id": "SELLER023"
+  },
+  {
+    "id": "MLB024",
+    "title": "Processador Intel Core i7-13700K LGA1700",
+    "brand": "Intel",
+    "category": "Componentes PC",
+    "price": {
+      "amount": 1999.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2423456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2423456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2423457_MLB.jpg"
+    ],
+    "attributes": {
+      "Cores": "16 cores",
+      "Threads": "24 threads",
+      "Base Clock": "3.4 GHz",
+      "Boost Clock": "5.4 GHz"
+    },
+    "available_quantity": 15,
+    "seller_id": "SELLER024"
+  },
+  {
+    "id": "MLB025",
+    "title": "Ar Condicionado Split Midea 12000 BTUs",
+    "brand": "Midea",
+    "category": "Climatização",
+    "price": {
+      "amount": 1799.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2523456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2523456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2523457_MLB.jpg"
+    ],
+    "attributes": {
+      "BTUs": "12000",
+      "Tipo": "Inverter",
+      "Voltagem": "220V",
+      "Classificação": "A"
+    },
+    "available_quantity": 20,
+    "seller_id": "SELLER025"
+  },
+  {
+    "id": "MLB026",
+    "title": "Geladeira Consul Frost Free 386L CRA42HK",
+    "brand": "Consul",
+    "category": "Eletrodomésticos",
+    "price": {
+      "amount": 2699.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2623456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2623456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2623457_MLB.jpg"
+    ],
+    "attributes": {
+      "Capacidade": "386 litros",
+      "Tipo": "Frost Free",
+      "Portas": "2 portas",
+      "Cor": "Branca"
+    },
+    "available_quantity": 8,
+    "seller_id": "SELLER026"
+  },
+  {
+    "id": "MLB027",
+    "title": "Tênis Adidas Ultraboost 22 Masculino Branco",
+    "brand": "Adidas",
+    "category": "Calçados",
+    "price": {
+      "amount": 899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2723456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2723456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2723457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tamanho": "42",
+      "Cor": "Branco",
+      "Tecnologia": "Boost",
+      "Tipo": "Running"
+    },
+    "available_quantity": 42,
+    "seller_id": "SELLER027"
+  },
+  {
+    "id": "MLB028",
+    "title": "Fogão Brastemp 4 Bocas Clean BFS4GAR",
+    "brand": "Brastemp",
+    "category": "Eletrodomésticos",
+    "price": {
+      "amount": 1299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2823456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2823456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2823457_MLB.jpg"
+    ],
+    "attributes": {
+      "Bocas": "4",
+      "Forno": "52 litros",
+      "Acendimento": "Automático",
+      "Cor": "Branco"
+    },
+    "available_quantity": 16,
+    "seller_id": "SELLER028"
+  },
+  {
+    "id": "MLB029",
+    "title": "Placa de Vídeo RTX 4070 Ti 12GB GDDR6X",
+    "brand": "NVIDIA",
+    "category": "Componentes PC",
+    "price": {
+      "amount": 4199.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_2923456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_2923456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_2923457_MLB.jpg"
+    ],
+    "attributes": {
+      "Memória": "12GB GDDR6X",
+      "CUDA Cores": "7680",
+      "Base Clock": "2310 MHz",
+      "Boost Clock": "2610 MHz"
+    },
+    "available_quantity": 6,
+    "seller_id": "SELLER029"
+  },
+  {
+    "id": "MLB030",
+    "title": "Impressora HP LaserJet Pro M404dn",
+    "brand": "HP",
+    "category": "Impressoras",
+    "price": {
+      "amount": 1599.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3023456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3023456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3023457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tipo": "Laser monocromática",
+      "Velocidade": "38 ppm",
+      "Conectividade": "USB, Ethernet",
+      "Duplex": "Automático"
+    },
+    "available_quantity": 25,
+    "seller_id": "SELLER030"
+  },
+  {
+    "id": "MLB031",
+    "title": "Aspirador Robô Roomba i7+ iRobot",
+    "brand": "iRobot",
+    "category": "Casa e Limpeza",
+    "price": {
+      "amount": 3999.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3123456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3123456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3123457_MLB.jpg"
+    ],
+    "attributes": {
+      "Navegação": "vSLAM",
+      "Bateria": "75 minutos",
+      "Wi-Fi": "Sim",
+      "Base": "Auto-esvaziamento"
+    },
+    "available_quantity": 7,
+    "seller_id": "SELLER031"
+  },
+  {
+    "id": "MLB032",
+    "title": "Mesa Gamer DT3 Sports GTX Preta 120cm",
+    "brand": "DT3 Sports",
+    "category": "Móveis",
+    "price": {
+      "amount": 799.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3223456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3223456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3223457_MLB.jpg"
+    ],
+    "attributes": {
+      "Largura": "120cm",
+      "Profundidade": "60cm",
+      "Altura": "75cm",
+      "Cor": "Preta com LED"
+    },
+    "available_quantity": 30,
+    "seller_id": "SELLER032"
+  },
+  {
+    "id": "MLB033",
+    "title": "Nintendo Switch OLED Neon Red Blue",
+    "brand": "Nintendo",
+    "category": "Games",
+    "price": {
+      "amount": 2799.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3323456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3323456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3323457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tela": "7\" OLED",
+      "Armazenamento": "64GB",
+      "Bateria": "4.5-9 horas",
+      "Controles": "Joy-Con"
+    },
+    "available_quantity": 18,
+    "seller_id": "SELLER033"
+  },
+  {
+    "id": "MLB034",
+    "title": "Ventilador de Teto Spirit 202 Preto 4 Pás",
+    "brand": "Spirit",
+    "category": "Climatização",
+    "price": {
+      "amount": 299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3423456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3423456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3423457_MLB.jpg"
+    ],
+    "attributes": {
+      "Pás": "4",
+      "Diâmetro": "110cm",
+      "Potência": "127W",
+      "Cor": "Preto"
+    },
+    "available_quantity": 45,
+    "seller_id": "SELLER034"
+  },
+  {
+    "id": "MLB035",
+    "title": "Caixa de Som JBL Charge 5 Bluetooth",
+    "brand": "JBL",
+    "category": "Áudio",
+    "price": {
+      "amount": 699.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3523456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3523456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3523457_MLB.jpg"
+    ],
+    "attributes": {
+      "Potência": "40W RMS",
+      "Bateria": "20 horas",
+      "Resistência": "IP67",
+      "Conectividade": "Bluetooth 5.1"
+    },
+    "available_quantity": 38,
+    "seller_id": "SELLER035"
+  },
+  {
+    "id": "MLB036",
+    "title": "Colchão Castor Sleep Max D45 Casal",
+    "brand": "Castor",
+    "category": "Casa e Dormir",
+    "price": {
+      "amount": 899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3623456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3623456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3623457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tamanho": "Casal 138x188cm",
+      "Densidade": "D45",
+      "Altura": "18cm",
+      "Tipo": "Espuma"
+    },
+    "available_quantity": 12,
+    "seller_id": "SELLER036"
+  },
+  {
+    "id": "MLB037",
+    "title": "Panela de Pressão Rochedo 4,5L Alumínio",
+    "brand": "Rochedo",
+    "category": "Casa e Cozinha",
+    "price": {
+      "amount": 179.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3723456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3723456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3723457_MLB.jpg"
+    ],
+    "attributes": {
+      "Capacidade": "4.5 litros",
+      "Material": "Alumínio",
+      "Segurança": "5 sistemas",
+      "Cor": "Prata"
+    },
+    "available_quantity": 55,
+    "seller_id": "SELLER037"
+  },
+  {
+    "id": "MLB038",
+    "title": "Smartphone Xiaomi Redmi Note 13 128GB",
+    "brand": "Xiaomi",
+    "category": "Celulares",
+    "price": {
+      "amount": 1299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3823456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3823456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3823457_MLB.jpg"
+    ],
+    "attributes": {
+      "Memória": "128GB",
+      "RAM": "6GB",
+      "Tela": "6.67 polegadas",
+      "Camera": "108MP"
+    },
+    "available_quantity": 35,
+    "seller_id": "SELLER038"
+  },
+  {
+    "id": "MLB039",
+    "title": "Ferro de Passar Philco PFV3100A Vapor",
+    "brand": "Philco",
+    "category": "Casa e Limpeza",
+    "price": {
+      "amount": 89.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_3923456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_3923456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_3923457_MLB.jpg"
+    ],
+    "attributes": {
+      "Potência": "1200W",
+      "Tipo": "Vapor seco",
+      "Base": "Cerâmica",
+      "Cor": "Azul"
+    },
+    "available_quantity": 70,
+    "seller_id": "SELLER039"
+  },
+  {
+    "id": "MLB040",
+    "title": "Teclado Mecânico Logitech MX Keys Mini",
+    "brand": "Logitech",
+    "category": "Periféricos",
+    "price": {
+      "amount": 599.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4023456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4023456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4023457_MLB.jpg"
+    ],
+    "attributes": {
+      "Layout": "ABNT2",
+      "Conectividade": "Bluetooth/USB",
+      "Bateria": "10 dias",
+      "Iluminação": "Backlight"
+    },
+    "available_quantity": 28,
+    "seller_id": "SELLER040"
+  },
+  {
+    "id": "MLB041",
+    "title": "Liquidificador Mondial Turbo L-1000W",
+    "brand": "Mondial",
+    "category": "Eletrodomésticos",
+    "price": {
+      "amount": 199.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4123456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4123456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4123457_MLB.jpg"
+    ],
+    "attributes": {
+      "Potência": "1000W",
+      "Capacidade": "3 litros",
+      "Velocidades": "12",
+      "Copo": "Vidro"
+    },
+    "available_quantity": 40,
+    "seller_id": "SELLER041"
+  },
+  {
+    "id": "MLB042",
+    "title": "Esteira Ergométrica Dream Fitness DR1600",
+    "brand": "Dream Fitness",
+    "category": "Fitness",
+    "price": {
+      "amount": 2199.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4223456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4223456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4223457_MLB.jpg"
+    ],
+    "attributes": {
+      "Velocidade": "1-16 km/h",
+      "Motor": "2.5 HP",
+      "Inclinação": "15 níveis",
+      "Peso máximo": "120kg"
+    },
+    "available_quantity": 8,
+    "seller_id": "SELLER042"
+  },
+  {
+    "id": "MLB043",
+    "title": "Câmera Canon EOS Rebel T7 18-55mm",
+    "brand": "Canon",
+    "category": "Câmeras",
+    "price": {
+      "amount": 2899.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4323456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4323456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4323457_MLB.jpg"
+    ],
+    "attributes": {
+      "Megapixels": "24.1 MP",
+      "Lente": "18-55mm",
+      "Tela": "3\" LCD",
+      "Vídeo": "Full HD"
+    },
+    "available_quantity": 14,
+    "seller_id": "SELLER043"
+  },
+  {
+    "id": "MLB044",
+    "title": "Purificador de Água Latina PA731 Branco",
+    "brand": "Latina",
+    "category": "Casa e Cozinha",
+    "price": {
+      "amount": 399.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4423456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4423456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4423457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tipo": "Parede",
+      "Filtragem": "3 estágios",
+      "Capacidade": "1.5 litros",
+      "Cor": "Branco"
+    },
+    "available_quantity": 32,
+    "seller_id": "SELLER044"
+  },
+  {
+    "id": "MLB045",
+    "title": "Monitor Gamer ASUS TUF 24\" 165Hz IPS",
+    "brand": "ASUS",
+    "category": "Monitores",
+    "price": {
+      "amount": 1399.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4523456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4523456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4523457_MLB.jpg"
+    ],
+    "attributes": {
+      "Tamanho": "24 polegadas",
+      "Resolução": "1920x1080",
+      "Taxa": "165Hz",
+      "Painel": "IPS"
+    },
+    "available_quantity": 22,
+    "seller_id": "SELLER045"
+  },
+  {
+    "id": "MLB046",
+    "title": "Secador de Cabelo Philips BHD274 2100W",
+    "brand": "Philips",
+    "category": "Beleza",
+    "price": {
+      "amount": 249.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4623456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4623456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4623457_MLB.jpg"
+    ],
+    "attributes": {
+      "Potência": "2100W",
+      "Velocidades": "3",
+      "Temperaturas": "3",
+      "Difusor": "Incluso"
+    },
+    "available_quantity": 48,
+    "seller_id": "SELLER046"
+  },
+  {
+    "id": "MLB047",
+    "title": "Suplemento Whey Protein Max Titanium 900g",
+    "brand": "Max Titanium",
+    "category": "Suplementos",
+    "price": {
+      "amount": 159.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4723456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4723456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4723457_MLB.jpg"
+    ],
+    "attributes": {
+      "Peso": "900g",
+      "Sabor": "Chocolate",
+      "Proteína": "24g por dose",
+      "Tipo": "Concentrado"
+    },
+    "available_quantity": 60,
+    "seller_id": "SELLER047"
+  },
+  {
+    "id": "MLB048",
+    "title": "Luminária LED Philips Hue Color 9W E27",
+    "brand": "Philips",
+    "category": "Iluminação",
+    "price": {
+      "amount": 299.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4823456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4823456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4823457_MLB.jpg"
+    ],
+    "attributes": {
+      "Potência": "9W",
+      "Cores": "16 milhões",
+      "Conectividade": "Wi-Fi",
+      "Base": "E27"
+    },
+    "available_quantity": 25,
+    "seller_id": "SELLER048"
+  },
+  {
+    "id": "MLB049",
+    "title": "Pasta Térmica Cooler Master MasterGel Pro",
+    "brand": "Cooler Master",
+    "category": "Componentes PC",
+    "price": {
+      "amount": 49.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_4923456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_4923456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_4923457_MLB.jpg"
+    ],
+    "attributes": {
+      "Volume": "1.5ml",
+      "Condutividade": "11 W/mK",
+      "Densidade": "2.8 g/cm³",
+      "Aplicação": "CPU/GPU"
+    },
+    "available_quantity": 90,
+    "seller_id": "SELLER049"
+  },
+  {
+    "id": "MLB050",
+    "title": "Fritadeira Elétrica Mondial Air Fryer 4L",
+    "brand": "Mondial",
+    "category": "Eletrodomésticos",
+    "price": {
+      "amount": 399.99,
+      "currency": "BRL"
+    },
+    "thumbnail": "https://http2.mlstatic.com/D_Q_NP_5023456_MLB.jpg",
+    "pictures": [
+      "https://http2.mlstatic.com/D_Q_NP_5023456_MLB.jpg",
+      "https://http2.mlstatic.com/D_Q_NP_5023457_MLB.jpg"
+    ],
+    "attributes": {
+      "Capacidade": "4 litros",
+      "Potência": "1500W",
+      "Temperatura": "80-200°C",
+      "Timer": "60 minutos"
+    },
+    "available_quantity": 35,
+    "seller_id": "SELLER050"
+  }
+]
