@@ -13,7 +13,7 @@ config:
 
 logging:
   level:
-    root: OFF  # Desliga todos os logs
+    root: INFO  # Desliga todos os logs
 
 features:
   path: src/test/resources/features
