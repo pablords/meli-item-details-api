@@ -19,8 +19,6 @@ Funcionalidade: Obter detalhes do produto
       | available_quantity | 10                  |
       | pictures    | ["url1", "url2"]          |
       | seller_id   | "seller123"               |
-      | seller_nickname | "vendedor_exemplo"      |
-      | seller_email | "vendedor@example.com"    |
 
   @fail
   Cenário: Falha ao obter detalhes do produto - Product not found

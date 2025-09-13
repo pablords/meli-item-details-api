@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.pablords.meli.itemdetail.utils.DataTableValidator;
+
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.pt.*;
 
@@ -62,23 +64,13 @@ public class ProductDetailsSteps {
   @E("a resposta deve conter os seguintes detalhes do produto:")
   public void a_resposta_deve_conter_os_seguintes_detalhes_do_produto(DataTable dataTable) {
     DataTableValidator.validateResponseWithDataTable(dataTable, responseContent);
-    System.out.println("✅ All expected fields validated successfully");
   }
 
   @E("a resposta deve conter a mensagem {string}")
   public void a_resposta_deve_conter_a_mensagem(String expectedMessage) {
     DataTableValidator.validateJsonResponseNotEmpty(responseContent);
     DataTableValidator.validateStringField("message", expectedMessage, responseContent);
-    System.out.println("✅ Expected error message validated successfully");
   }
-
-  @Quando("eu solicito os detalhes do produto")
-  public void eu_solicito_os_detalhes_do_produto() throws Exception {
-    // Este step não tem parâmetro, então usa o ID que foi definido no step anterior
-    String id = PRODUCT_DETAILS_API_URL.substring(PRODUCT_DETAILS_API_URL.lastIndexOf("/") + 1);
-    eu_solicito_os_detalhes_do_produto(id);
-  }
-
 
 
 }
