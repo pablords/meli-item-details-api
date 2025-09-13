@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.pablords.meli.itemdetail.domain.application.exception.NotFoundException;
+
 import java.time.Duration;
 
 @Configuration
@@ -26,6 +28,8 @@ public class ResilienceConfig {
                 .slowCallRateThreshold(50) // 50% de calls lentas para considerar falha
                 .slowCallDurationThreshold(Duration.ofSeconds(2)) // Calls > 2s são consideradas lentas
                 .permittedNumberOfCallsInHalfOpenState(3) // Permite 3 calls no estado half-open
+                // Ignora exceções de negócio - Circuit Breaker não deve interferir em erros de domínio
+                .ignoreExceptions(NotFoundException.class)
                 .build();
 
         return CircuitBreakerRegistry.of(config);

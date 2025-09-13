@@ -6,6 +6,11 @@ spring:
   sql:
     init:
       mode: never # ⚠️ Impede que scripts SQL rodem automaticamente
+
+
+server:
+  servlet:
+    context-path: /api/v1
       
 config:
   activate:
@@ -17,7 +22,3 @@ logging:
 
 features:
   path: src/test/resources/features
-  request:
-    path: src/test/resources/requests
-  response:
-    path: src/test/resources/responses

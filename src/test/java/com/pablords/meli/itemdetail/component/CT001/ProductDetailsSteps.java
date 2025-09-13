@@ -30,7 +30,7 @@ public class ProductDetailsSteps {
 
   @Quando("eu solicito os detalhes do produto com id {string}")
   public void eu_solicito_os_detalhes_do_produto(String id) throws Exception {
-    this.PRODUCT_DETAILS_API_URL = "/api/v1/products" + "/" + id;
+    this.PRODUCT_DETAILS_API_URL = "/products" + "/" + id;
     System.out.println("Fazendo chamada para URL: " + PRODUCT_DETAILS_API_URL);
     mockMvc.perform(get(PRODUCT_DETAILS_API_URL)
         .contentType(MediaType.APPLICATION_JSON))

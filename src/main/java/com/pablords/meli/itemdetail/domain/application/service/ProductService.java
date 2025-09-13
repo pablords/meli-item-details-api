@@ -35,6 +35,9 @@ public class ProductService implements ProductServicePort {
 
   public ProductWithSeller getProductWithSellerFallback(String id, Exception ex) {
     log.warn("Fallback triggered for getProductWithSeller with id: {} due to: {}", id, ex.getMessage());
+    if (ex instanceof NotFoundException) {
+      throw (NotFoundException) ex;
+    }
     throw new NotFoundException("Product service temporarily unavailable. Please try again later.");
   }
 
