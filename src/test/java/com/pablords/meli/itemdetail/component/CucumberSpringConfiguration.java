@@ -7,7 +7,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.pablords.meli.itemdetail.domain.ports.outbound.repository.ProductRepositoryPort;
+import com.pablords.meli.itemdetail.adapters.outbound.file.FileProductRepositoryAdapter;
 import com.pablords.meli.itemdetail.domain.entity.Product;
 import com.pablords.meli.itemdetail.domain.valueobject.Money;
 import com.pablords.meli.itemdetail.domain.valueobject.Seller;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class CucumberSpringConfiguration {
 
   @MockBean
-  private ProductRepositoryPort productRepositoryPort;
+  private FileProductRepositoryAdapter fileProductRepositoryAdapter;
 
   @Autowired
   private Environment environment;
@@ -63,13 +63,13 @@ public class CucumberSpringConfiguration {
 
     Seller seller = new Seller("seller123", "vendedor_exemplo", 4.5);
 
-    when(productRepositoryPort.getById("12345")).thenReturn(Optional.of(product1));
-    when(productRepositoryPort.getById("99999")).thenReturn(Optional.empty());
-    when(productRepositoryPort.getSellerById("seller123")).thenReturn(Optional.of(seller));
+    when(fileProductRepositoryAdapter.getById("12345")).thenReturn(Optional.of(product1));
+    when(fileProductRepositoryAdapter.getById("99999")).thenReturn(Optional.empty());
+    when(fileProductRepositoryAdapter.getSellerById("seller123")).thenReturn(Optional.of(seller));
 
     List<Product> products = List.of(product1, product2);
-    when(productRepositoryPort.recommendations("12345", 6)).thenReturn(products);
-    when(productRepositoryPort.recommendations("99999", 6)).thenReturn(List.of());
+    when(fileProductRepositoryAdapter.recommendations("12345", 6)).thenReturn(products);
+    when(fileProductRepositoryAdapter.recommendations("99999", 6)).thenReturn(List.of());
 
     System.out.println("✅ Mocks configurados no CucumberSpringConfiguration");
   }
