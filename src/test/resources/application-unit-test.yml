@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: unit-test
+
+# Minimal test configuration
+logging:
+  level:
+    root: WARN
+    com.pablords: INFO
+
+# Disable unnecessary features for unit tests
+spring.jpa.hibernate.ddl-auto: none
+spring.sql.init.mode: never
