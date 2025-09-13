@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Item Details API — Evaluation (Tech Lead)</title>
+  <style>
+    :root { --bg:#0b0f14; --fg:#e6edf3; --muted:#9fb1c1; --accent:#4cc9f0; --card:#121a22; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, 'Helvetica Neue', Arial; background:var(--bg); color:var(--fg); }
+    header { padding:28px 20px; background:linear-gradient(180deg, #0e1620, #0b0f14 60%); border-bottom:1px solid #1c2a38; }
+    h1 { margin:0 0 6px; font-size:22px; }
+    h2 { font-size:18px; margin-top:26px; border-left:3px solid var(--accent); padding-left:10px; }
+    p, li { color:var(--muted); line-height:1.55; }
+    .container { max-width:980px; margin:0 auto; padding:20px; }
+    .grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; }
+    .card { background:var(--card); border:1px solid #1c2a38; border-radius:12px; padding:16px 18px; }
+    code, pre { background:#0a121a; color:#d3e1ee; border:1px solid #1c2a38; border-radius:8px; }
+    code { padding:2px 6px; }
+    pre { padding:12px; overflow:auto; }
+    .tag { display:inline-block; padding:2px 8px; border-radius:999px; background:#0a121a; border:1px solid #1c2a38; color:#cfe5f7; font-size:12px; margin-right:6px; }
+    a { color:#9bd8ff; }
+    .small { font-size:13px; }
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="tag">Item Details API</div>
+      <div class="tag">Spring Boot 3.4</div>
+      <div class="tag">Java 21</div>
+      <h1>Avaliação Técnica — Decisões, Trade-offs e Evidências</h1>
+      <p class="small">Resumo da solução para apresentação (nível Tech Lead).</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>1) Escopo e Requisitos</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>O que foi pedido</strong>
+        <ul>
+          <li>API que <b>retorna dados</b> (read-only), <b>sem banco de dados</b>.</li>
+          <li>Persistência via <b>JSON</b> (ou CSV).</li>
+          <li>Endpoints típicos de página de item (detalhe, recomendações, busca).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Como atendi</strong>
+        <ul>
+          <li><code>FileProductRepository</code> lendo <code>data/*.json</code> do classpath.</li>
+          <li>Arquitetura <b>Hexagonal</b> (ports/adapters) com domínio isolado.</li>
+          <li>Read-only + Observabilidade (Actuator/Prometheus) + OpenAPI/Swagger.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>2) Arquitetura</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>Camadas</strong>
+        <ul>
+          <li><b>domain</b>: entidades/VO e <code>ProductRepository</code> (porta).</li>
+          <li><b>application</b>: casos de uso (<code>GetProductDetail</code>, <code>SearchProducts</code>, <code>GetRecommendations</code>).</li>
+          <li><b>infrastructure</b>: <code>FileProductRepository</code> (JSON + índice + cache).</li>
+          <li><b>app</b>: Spring Boot (controllers, config, docs, health/metrics).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Por que</strong>
+        <ul>
+          <li>Permite <b>trocar storage</b> (CSV/HTTP/DB) sem tocar domínio/use-cases.</li>
+          <li>Controllers não conhecem infra → baixo acoplamento, testes simples.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>3) Dados e Índices</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>Leitura</strong>
+        <ul>
+          <li>Jackson desserializa JSON em mapas e VO.</li>
+          <li>Índices em memória: <b>tokens de título</b>, <b>categoria</b>, <b>marca</b>.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Busca</strong>
+        <ul>
+          <li>Tokenização simples (lowercase + split regex).</li>
+          <li>Pagina: <code>limit/offset</code>, <code>total</code> calculado.</li>
+          <li>Recomendações: união de {mesma categoria, mesma marca} menos o próprio item.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>4) Performance & Cache</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>Hot paths</strong>
+        <ul>
+          <li>Detalhe por ID cacheado via <b>Caffeine</b> (TTL configurável).</li>
+          <li>Índices evitam varredura O(n) nas consultas.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>HTTP caching (bônus sugerido)</strong>
+        <ul>
+          <li>ETag/Last-Modified para <code>/products/{id}</code>.</li>
+          <li>Cache-Control conservador no edge/CDN.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>5) Observabilidade & Operação</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>Actuator</strong>
+        <ul>
+          <li><code>/actuator/health</code> com probes.</li>
+          <li><code>/actuator/prometheus</code> para scraping.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Métricas & Logs</strong>
+        <ul>
+          <li>Latência/contagem por rota via Micrometer (fácil de estender).</li>
+          <li>Logs estruturados prontos para ELK/OTel.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>6) Contratos & DX</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>OpenAPI</strong>
+        <ul>
+          <li>Swagger UI em <code>/docs</code>.</li>
+          <li>DTO/VO estáveis; Bean Validation em entradas.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Erros</strong>
+        <ul>
+          <li>404 para ID inexistente.</li>
+          <li>400 para parâmetros inválidos (<code>@Min/@Max</code> etc.).</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>7) Testes</h2>
+    <div class="grid">
+      <div class="card">
+        <strong>Integração</strong>
+        <ul>
+          <li><code>ApiIT</code> (MockMvc) cobrindo rotas principais.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Extensões sugeridas</strong>
+        <ul>
+          <li>Contract tests contra OpenAPI.</li>
+          <li>Unidades para índice/busca e recomendações.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>8) ADRs (curtos)</h2>
+    <div class="card">
+      <ol>
+        <li><b>ADR-001 — Arquitetura Hexagonal</b>: separar domínio de infra por evolutividade.</li>
+        <li><b>ADR-002 — Storage JSON</b>: aderência ao enunciado; sem DB real.</li>
+        <li><b>ADR-003 — Índice em Memória</b>: tempo de inicialização × tempo de consulta; reduz O(n).</li>
+        <li><b>ADR-004 — Cache TTL</b>: Caffeine no detalhe/ID para reduzir I/O.</li>
+        <li><b>ADR-005 — Paginação limit/offset</b>: simples; alternativa futura: cursor/slice.</li>
+        <li><b>ADR-006 — Recomendações heurísticas</b>: por categoria/marca; fácil evoluir.</li>
+        <li><b>ADR-007 — Observabilidade</b>: Actuator + Prometheus para SLO e troubleshoot.</li>
+        <li><b>ADR-008 — Read-only</b>: sem endpoints de escrita; evita overscope.</li>
+      </ol>
+    </div>
+
+    <h2>9) Roadmap (futuro)</h2>
+    <div class="grid">
+      <div class="card">
+        <ul>
+          <li>ETag/If-None-Match e Cache-Control.</li>
+          <li>Admin: reload do dataset + warmup do cache.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <ul>
+          <li>Adapter CSV alternativo.</li>
+          <li>Recs com sinais (popularidade, preço, afinidade de marca).</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="small" style="margin-top:24px;color:#7ea3be;">© 2025 — Item Details API (Tech Lead).</p>
+  </main>
+</body>
+</html>
