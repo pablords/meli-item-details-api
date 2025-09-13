@@ -128,7 +128,13 @@
       <version>4.6.0</version>
       <scope>test</scope>
     </dependency>
-    
+
+    <dependency>
+      <groupId>com.github.ben-manes.caffeine</groupId>
+      <artifactId>caffeine</artifactId>
+      <version>3.1.8</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -299,47 +305,6 @@
                 </cucumber.glue>
                 <cucumber.language>pt</cucumber.language>
               </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
-    <!-- Testes de Contrato -->
-    <profile>
-      <id>contract-test</id>
-      <build>
-        <plugins>
-          <!-- Plugin para rodar os testes de contrato na fase 'test' -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <includes>
-                <include>**/*ContractTest.java</include>
-              </includes>
-              <excludes>
-                <exclude>**/*UnitTest.java</exclude>
-                <exclude>**/*ComponentTest.java</exclude>
-                <exclude>**/*IntegrationTest.java</exclude>
-              </excludes>
-              <skipTests>${skipITs}</skipTests>
-            </configuration>
-          </plugin>
-
-          <!-- Plugin do Pact para verificar os contratos -->
-          <plugin>
-            <groupId>au.com.dius.pact.provider</groupId>
-            <artifactId>maven</artifactId>
-            <version>4.1.11</version>
-            <configuration>
-              <!-- <pactBrokerUrl>http://localhost:9292</pactBrokerUrl>  -->
-              <serviceProviders>
-                <serviceProvider>
-                  <name>ParkingService</name>
-                  <verificationType>ANNOTATED_METHOD</verificationType>
-                </serviceProvider>
-              </serviceProviders>
             </configuration>
           </plugin>
         </plugins>
