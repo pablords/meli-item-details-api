@@ -34,7 +34,8 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
   long ttl;
 
   public FileProductRepositoryAdapter() {
-    // Construtor intencionalmente vazio: inicialização ocorre em @PostConstruct (cache + carga de dataset)
+    // Construtor intencionalmente vazio: inicialização ocorre em @PostConstruct
+    // (cache + carga de dataset)
   }
 
   @PostConstruct
@@ -52,8 +53,6 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
       cache.put(id, p);
     return Optional.ofNullable(p);
   }
-
-
 
   public List<Product> recommendations(String id, int limit) {
     var p = byId.get(id);
@@ -76,7 +75,7 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
       List<Map<String, Object>> raw = om.readValue(pIs, new TypeReference<>() {
       });
       for (var rp : raw) {
-  var p = mapProduct(rp);
+        var p = mapProduct(rp);
         byId.put(p.getId(), p);
         byCategory.computeIfAbsent(p.getCategory().toLowerCase(), k -> new LinkedHashSet<>()).add(p.getId());
         byBrand.computeIfAbsent(p.getBrand().toLowerCase(), k -> new LinkedHashSet<>()).add(p.getId());
@@ -92,7 +91,9 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
 
   // Exceção específica para falhas de carregamento do dataset
   static class DatasetLoadException extends RuntimeException {
-    DatasetLoadException(String msg, Throwable cause) { super(msg, cause); }
+    DatasetLoadException(String msg, Throwable cause) {
+      super(msg, cause);
+    }
   }
 
   private static InputStream getResource(String path) {
@@ -119,7 +120,16 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
       raw.forEach((k, v) -> attrs.put(k, v.toString()));
     int available = ((Number) rp.get("available_quantity")).intValue();
     String sellerId = (String) rp.get("seller_id");
-    return Product.create(id, title, brand, category, money, thumbnail, pictures, attrs, available, sellerId);
+    return Product.builder(id, title, category)
+        .brand(brand)
+        .price(money)
+        .thumbnail(thumbnail)
+        .pictures(pictures)
+        .attributes(attrs)
+        .availableQuantity(available)
+        .sellerId(sellerId)
+        .build();
+
   }
 
 }

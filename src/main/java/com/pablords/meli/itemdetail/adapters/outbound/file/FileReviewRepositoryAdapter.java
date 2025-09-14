@@ -99,17 +99,18 @@ public class FileReviewRepositoryAdapter implements ReviewRepositoryPort {
   }
 
   private static Review map(Map<String, Object> r) {
-    return Review.create(
-        (String) r.get("id"),
-        (String) r.get("product_id"),
-        (int) r.get("rating"),
-        (String) r.get("title"),
-        (String) r.get("body"),
-        (String) r.get("author"),
-        (boolean) r.get("verified_purchase"),
-        (int) r.get("helpful_votes"),
-        (String) r.get("created_at"),
-        (String) r.get("locale"));
+  return Review.builder(
+    (String) r.get("id"),
+    (String) r.get("product_id"),
+    (int) r.get("rating"))
+    .title((String) r.get("title"))
+    .body((String) r.get("body"))
+    .author((String) r.get("author"))
+    .verifiedPurchase((boolean) r.get("verified_purchase"))
+    .helpfulVotes((int) r.get("helpful_votes"))
+    .createdAt((String) r.get("created_at"))
+    .locale((String) r.get("locale"))
+    .build();
   }
 
   private static RatingSummary computeSummary(List<Review> list) {

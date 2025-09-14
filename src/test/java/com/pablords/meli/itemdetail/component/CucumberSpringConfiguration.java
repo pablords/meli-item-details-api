@@ -48,38 +48,38 @@ public class CucumberSpringConfiguration {
     System.out.println("🔎 Active Profiles: " + String.join(", ", environment.getActiveProfiles()));
 
     // Configurar mocks para os testes
-    Product product1 = Product.create("MLB001",
-        "Smartphone Samsung Galaxy S24 Ultra 256GB",
-        "Samsung",
-        "Celulares",
-        new Money(4999.99, "BRL"),
-        "https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg",
-        List.of("https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg", "https://http2.mlstatic.com/D_Q_NP_123457_MLB.jpg"),
-        Map.of("Memoria", "256GB"),
-        25,
-        "SELLER001");
+    Product product1 = Product.builder("MLB001", "Smartphone Samsung Galaxy S24 Ultra 256GB", "SELLER001")
+        .brand("Samsung")
+        .price(new Money(4999.99, "BRL"))
+        .thumbnail("https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg")
+        .pictures(List.of("https://http2.mlstatic.com/D_Q_NP_123456_MLB.jpg",
+            "https://http2.mlstatic.com/D_Q_NP_123457_MLB.jpg"))
+        .attributes(Map.of("Memoria", "256GB"))
+        .availableQuantity(25)
+        .sellerId("SELLER001")
+        .build();
 
-    Product product2 = Product.create("MLB002",
-        "iPhone 15 Pro Max 256GB Titânio Natural",
-        "Apple",
-        "Celulares",
-        new Money(8999.99, "BRL"),
-        "https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg",
-        List.of("https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg", "https://http2.mlstatic.com/D_Q_NP_223457_MLB.jpg"),
-        Map.of("Memoria", "256GB"),
-        15,
-        "SELLER002");
+    Product product2 = Product.builder("MLB002", "iPhone 15 Pro Max 256GB Titânio Natural", "SELLER002")
+        .brand("Apple")
+        .price(new Money(8999.99, "BRL"))
+        .thumbnail("https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg")
+        .pictures(List.of("https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg",
+            "https://http2.mlstatic.com/D_Q_NP_223457_MLB.jpg"))
+        .attributes(Map.of("Memoria", "256GB"))
+        .availableQuantity(15)
+        .sellerId("SELLER002")
+        .build();
 
-    Product product3 = Product.create("MLB003",
-        "iPhone 15 Pro Max 256GB Titânio Natural",
-        "Apple",
-        "Celulares",
-        new Money(8999.99, "BRL"),
-        "https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg",
-        List.of("https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg", "https://http2.mlstatic.com/D_Q_NP_223457_MLB.jpg"),
-        Map.of("Memoria", "256GB"),
-        15,
-        "SELLER002");
+    Product product3 = Product.builder("MLB003", "iPhone 15 Pro Max 256GB Titânio Natural", "SELLER003")
+        .brand("Apple")
+        .price(new Money(8999.99, "BRL"))
+        .thumbnail("https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg")
+        .pictures(List.of("https://http2.mlstatic.com/D_Q_NP_223456_MLB.jpg",
+            "https://http2.mlstatic.com/D_Q_NP_223457_MLB.jpg"))
+        .attributes(Map.of("Memoria", "256GB"))
+        .availableQuantity(15)
+        .sellerId("SELLER003")
+        .build();
 
     Seller seller = new Seller("SELLER001", "TechMaster_SP", 4.8);
 
@@ -91,12 +91,23 @@ public class CucumberSpringConfiguration {
     when(fileProductRepositoryAdapter.recommendations("MLB001", 6)).thenReturn(products);
     when(fileProductRepositoryAdapter.recommendations("99999", 6)).thenReturn(List.of());
 
-    var review1 = Review.create("1", "MLB001", 3, "product1", "first", "author1", false, 0,
-        LocalDateTime.now().toString(),
-        "pt-BR");
-    var review2 = Review.create("2", "MLB001", 4, "product1", "second", "author2", false, 0,
-        LocalDateTime.now().toString(),
-        "pt-BR");
+    var review1 = Review.builder("1", "MLB001", 3)
+        .title("first")
+        .author("author1")
+        .verifiedPurchase(false)
+        .helpfulVotes(0)
+        .createdAt(LocalDateTime.now().toString())
+        .locale("pt-BR")
+        .build();
+
+    var review2 = Review.builder("2", "MLB001", 4)
+        .title("second")
+        .author("author2")
+        .verifiedPurchase(false)
+        .helpfulVotes(0)
+        .createdAt(LocalDateTime.now().toString())
+        .locale("pt-BR")
+        .build();
 
     items = List.of(review1, review2);
 

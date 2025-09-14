@@ -17,14 +17,12 @@ import com.pablords.meli.itemdetail.domain.application.ports.inbound.service.Rev
 import com.pablords.meli.itemdetail.domain.application.service.ReviewService;
 import com.pablords.meli.itemdetail.domain.entity.Review;
 import com.pablords.meli.itemdetail.domain.ports.outbound.repository.ReviewRepositoryPort;
-import com.pablords.meli.itemdetail.domain.valueobject.Paged;
 import com.pablords.meli.itemdetail.domain.valueobject.ReviewSort;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ReviewService Unit Tests")
 class ReviewServiceTest {
   private ReviewServicePort service;
-  private Paged<Review> paged;
   private List<Review> items;
 
   @Mock
@@ -32,12 +30,25 @@ class ReviewServiceTest {
 
   @BeforeEach
   void setUp() {
-    var review1 = Review.create("1", "1", 3, "product1", "first", "author1", false, 0, LocalDateTime.now().toString(),
-        "pt-BR");
-    var review2 = Review.create("2", "1", 4, "product1", "second", "author2", false, 0, LocalDateTime.now().toString(),
-        "pt-BR");
+    var review1 = Review.builder("1", "1", 3)
+        .title("first")
+        .author("author1")
+        .verifiedPurchase(false)
+        .helpfulVotes(0)
+        .createdAt(LocalDateTime.now().toString())
+        .locale("pt-BR")
+        .build();
+
+    var review2 = Review.builder("2", "1", 4)
+        .title("second")
+        .author("author2")
+        .verifiedPurchase(false)
+        .helpfulVotes(0)
+        .createdAt(LocalDateTime.now().toString())
+        .locale("pt-BR")
+        .build();
+
     items = List.of(review1, review2);
-    paged = new Paged<Review>(items, 1, 2, 0);
     service = new ReviewService(repository);
 
     when(repository.findByProduct("1", ReviewSort.RECENT, 2, 1)).thenReturn(items);

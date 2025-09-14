@@ -44,17 +44,16 @@ class ProductServiceTest {
 
   // Test data factory methods
   private Product createTestProduct(String id, String sellerId) {
-    return Product.create(
-        id,
-        "Test Product",
-        "Test Brand",
-        "Test Category",
-        new Money(999.99, "BRL"),
-        "http://example.com/thumbnail.jpg",
-        List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"),
-        Map.of("Color", "Blue", "Size", "L"),
-        10,
-        sellerId);
+
+    return Product.builder(id, "Test Product", sellerId)
+        .brand("Test Brand")
+        .price(new Money(999.99, "BRL"))
+        .thumbnail("http://example.com/thumbnail.jpg")
+        .pictures(List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"))
+        .attributes(Map.of("Color", "Blue", "Size", "L"))
+        .availableQuantity(10)
+        .sellerId(sellerId)
+        .build();
   }
 
   private Seller createTestSeller(String id) {
