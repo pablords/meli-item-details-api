@@ -1,75 +1,86 @@
 # meli-item-details-api
 
-# visão executiva (o que você vai apresentar)
+API de detalhes de item (estilo MELI) para página de produto: detalhes e recomendações. Projeto em Java 17, Spring Boot 3.4, arquitetura hexagonal baseada em serviços, armazenamento em JSON, observabilidade e testes.
 
-* **objetivo**: API de detalhes do item (estilo MELI) fornecendo dados para a página de produto: detalhes, recomendações e busca.
-* **stack**: Node 20 + TS 5, Express, Zod (validação), Pino (logs), Prometheus metrics, LRU cache, OpenAPI (Swagger UI), Jest + Supertest.
-* **arquitetura**: **Hexagonal (Ports & Adapters)** para permitir trocar JSON por DB real depois sem reescrever domínio/casos de uso.
+## Stack
+- Java 17
+- Spring Boot 3.4
+- Armazenamento: arquivos JSON (`data/products.json`, `data/sellers.json`)
+- Observabilidade: Actuator
+- Documentação: OpenAPI/Swagger
+- Cache: Caffeine (TTL configurável)
 
+## Arquitetura
+Hexagonal (Ports & Adapters):
+- **domain**: entidades, value objects, portas (`ProductRepository`)
+- **service**: serviços responsáveis pela lógica de negócio (ex: `ProductService`)
+- **infrastructure/adapters**: implementação das portas (ex: `FileProductRepository`)
+- **app**: configuração Spring Boot, controllers, docs, métricas, health checks
 
-# endpoints e contratos
+## Endpoints principais
+- `GET /api/v1/products/{id}` — Detalhe do produto (inclui seller)
+- `GET /api/v1/products/{id}/recommendations?limit=6` — Recomendações por categoria/marca
+- `GET /actuator/health` — Health check
+- `GET /docs` — Swagger UI
 
-* `GET /api/v1/products/:id` → detalhe do produto (inclui **seller**).
-* `GET /api/v1/products/:id/recommendations?limit=6` → recomendações por categoria/marca.
-* `GET /api/v1/search?q=&limit=&offset=` → busca com paginação.
-* `GET /healthz`, `GET /readyz` → probes.
-* `GET /metrics` → métricas Prometheus.
-* `GET /docs` → Swagger UI a partir do `openapi.yaml`.
+## Dados e índices
+- Persistência via JSON
+- Índices em memória: categoria, marca
 
-> O **OpenAPI** já está no repo (`openapi.yaml`). Isso viabiliza validação de contrato com o front e “API-first”.
+## Recomendações
+- Heurística: mesma categoria/marca, exclui o próprio item
+- Limite configurável
 
-# principais casos (o que justificar na entrevista)
+## Cache
+- Detalhe por ID cacheado via Caffeine (TTL)
+- Índices evitam varredura O(n)
 
-1. **Domínio limpo + Casos de uso**
+## Observabilidade
+- Actuator: health, métricas
+- Logs estruturados
 
+## Testes
+- Integração: MockMvc cobrindo rotas principais
+- Extensões sugeridas: contract tests, unidades para índice/recomendações
 
-2. **Busca performática sem DB**
+## ADRs
+Decisões arquiteturais documentadas em `docs/ADR-00X.md`.
 
-   * Índice em memória por **tokens** (título), **categoria** e **marca** (maps de `token -> set(productId)`).
-   * Filtro por termos, paginação simples e contagem total.
-
-3. **Recomendações mínimas, porém coerentes**
-
-   * Heurística: mesmo `category` e mesma `brand`, excluindo o próprio item; limite configurável.
-
-4. **Cache LRU com TTL**
-
-   * Cache de detalhe por id, TTL configurável (`CACHE_TTL_MS`), invalidação automática por expiração.
-
-5. **Observabilidade e SRE-friendly**
-
-   * Métrica `http_request_duration_ms{method,route,status}` pronta para painéis.
-
-6. **Segurança e resiliência**
-
-   * `helmet`, `rateLimit` global (eg. 300 req/min), `CORS` restrito, tamanho de payload limitado, validações (zod).
-   * (Ponto de evolução) Circuit-breaker para adaptadores externos — deixei *placeholder* arquitetural.
-
-7. **Qualidade e testes**
-
-8. **Operação e DX**
-
-   * `run.md` com fluxo de execução local, build, testes, Docker.
-   * `prompts.md` — transparência do uso de GenAI na produtividade (pedido do desafio).
-
-# estrutura de pastas (hexagonal)
-
+## Estrutura de pastas
+```
+src/
+  main/java/com/pablords/meli/itemdetail/
+    adapters/
+    config/
+    domain/
+    service/
+    Application.java
+  resources/
+    application.yml
+    data/products.json
+    data/sellers.json
+  test/java/com/pablords/meli/itemdetail/
+    component/
+    integration/
+    unit/
+    utils/
+  test/resources/
+    data/expected-responses/
+    features/
 ```
 
-```
+## Como rodar local
+1. Requisitos: Java 17, Maven
+2. Build: `./mvnw clean package`
+3. Rodar: `./mvnw spring-boot:run` ou via Docker (`docker-compose up`)
+4. Acessar Swagger: [http://localhost:8080/docs](http://localhost:8080/docs)
 
-# como rodar local
-
-
-
-# sugestões de evolução (se quiser brilhar na conversa)
-
-* **Feature flags** para alternar heurísticas de recomendação.
-* **ETag/Last-Modified** nos detalhes para economizar banda (HTTP cache do front).
-* **Search index**: normalização PT-BR (acentos), ranqueamento TF-IDF leve.
-* **Rate limit adaptativo** por IP/rota.
-* **Data versioning** em `data/` e invalidar cache por versão.
-* **Contract tests** com `jest-openapi` para garantir compatibilidade de resposta.
-* **CI** (GitHub Actions): lint + test + build + docker + scan.
+## Sugestões de evolução
+- Feature flags para heurísticas de recomendação
+- ETag/Last-Modified nos detalhes para HTTP cache
+- Rate limit adaptativo por IP/rota
+- Data versioning e invalidar cache por versão
+- Contract tests para garantir compatibilidade
+- CI/CD: lint, test, build, docker, scan
 
 
