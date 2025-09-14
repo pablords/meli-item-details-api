@@ -32,7 +32,7 @@ public class ReviewController implements ReviewSwagger {
   @GetMapping("/products/{id}")
   public ResponseEntity<ReviewResponseDTO> reviews(@PathVariable String id,
       @RequestParam(defaultValue = "recent") String sort,
-      @RequestParam(defaultValue = "20") @Min(1) @Max(100) int limit,
+      @RequestParam(defaultValue = "2") @Min(1) @Max(100) int limit,
       @RequestParam(defaultValue = "0") @Min(0) int offset) {
     log.info("Fetching reviews for product {} with sort {} and pagination {}:{}", id, sort, limit, offset);
     var s = switch (sort.toLowerCase()) {
