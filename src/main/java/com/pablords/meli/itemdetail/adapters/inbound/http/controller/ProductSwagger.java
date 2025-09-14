@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.ProductResponseDTO;
-import com.pablords.meli.itemdetail.adapters.inbound.http.dto.RecomendationResponseDTO;
+import com.pablords.meli.itemdetail.adapters.inbound.http.dto.RecommendationResponseDTO;
 import com.pablords.meli.itemdetail.adapters.inbound.http.handler.ApiErrorDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,10 +37,10 @@ public interface ProductSwagger {
 
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Recommendations found", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = RecomendationResponseDTO.class))
+          @Content(mediaType = "application/json", schema = @Schema(implementation = RecommendationResponseDTO.class))
       })
   })
-  ResponseEntity<Map<String, List<RecomendationResponseDTO>>> getRecommendations(@PathVariable String id,
+  ResponseEntity<Map<String, List<RecommendationResponseDTO>>> getRecommendations(@PathVariable String id,
       @RequestParam(defaultValue = "6") @Min(1) @Max(24) int limit);
 
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.PriceResponseDTO;
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.ProductResponseDTO;
-import com.pablords.meli.itemdetail.adapters.inbound.http.dto.RecomendationResponseDTO;
+import com.pablords.meli.itemdetail.adapters.inbound.http.dto.RecommendationResponseDTO;
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.SellerResponseDTO;
 import com.pablords.meli.itemdetail.domain.application.ports.inbound.service.ProductServicePort;
 import com.pablords.meli.itemdetail.domain.entity.Product;
@@ -66,13 +66,13 @@ public class ProductController implements ProductSwagger {
   }
 
   @GetMapping("/{id}/recommendations")
-  public ResponseEntity<Map<String, List<RecomendationResponseDTO>>> getRecommendations(@PathVariable String id,
+  public ResponseEntity<Map<String, List<RecommendationResponseDTO>>> getRecommendations(@PathVariable String id,
       @RequestParam(defaultValue = "6") @Min(1) @Max(24) int limit) {
     log.info("Fetching product recommendations for id: {}", id);
     List<Product> items = productService.getRecommendations(id, limit);
     log.info("Product recommendations fetched successfully for id: {}", id);
     return ResponseEntity.status(HttpStatus.OK)
-        .body(Map.of("items", items.stream().map(RecomendationResponseDTO::from).toList()));
+        .body(Map.of("items", items.stream().map(RecommendationResponseDTO::from).toList()));
   }
 
 }
