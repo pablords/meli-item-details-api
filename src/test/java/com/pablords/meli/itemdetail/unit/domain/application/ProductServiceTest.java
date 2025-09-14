@@ -26,439 +26,280 @@ import com.pablords.meli.itemdetail.domain.entity.Product;
 import com.pablords.meli.itemdetail.domain.ports.outbound.repository.ProductRepositoryPort;
 import com.pablords.meli.itemdetail.domain.valueobject.Money;
 import com.pablords.meli.itemdetail.domain.valueobject.ProductWithSeller;
-import com.pablords.meli.itemdetail.domain.valueobject.SearchResult;
 import com.pablords.meli.itemdetail.domain.valueobject.Seller;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ProductService Unit Tests")
 class ProductServiceTest {
 
-    @Mock
-    private ProductRepositoryPort productRepository;
+  @Mock
+  private ProductRepositoryPort productRepository;
 
-    private ProductService productService;
+  private ProductService productService;
 
-    @BeforeEach
-    void setUp() {
-        productService = new ProductService(productRepository);
+  @BeforeEach
+  void setUp() {
+    productService = new ProductService(productRepository);
+  }
+
+  // Test data factory methods
+  private Product createTestProduct(String id, String sellerId) {
+    return Product.create(
+        id,
+        "Test Product",
+        "Test Brand",
+        "Test Category",
+        new Money(999.99, "BRL"),
+        "http://example.com/thumbnail.jpg",
+        List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"),
+        Map.of("Color", "Blue", "Size", "L"),
+        10,
+        sellerId);
+  }
+
+  private Seller createTestSeller(String id) {
+    return new Seller(id, "TestSeller_" + id, 4.8);
+  }
+
+  @Nested
+  @DisplayName("getProductWithSeller() - Happy Path")
+  class GetProductWithSellerHappyPath {
+
+    @Test
+    @DisplayName("should return ProductWithSeller when product and seller exist")
+    void shouldReturnProductWithSellerWhenBothExist() {
+      // Arrange
+      String productId = "PRODUCT_001";
+      String sellerId = "SELLER_001";
+      Product expectedProduct = createTestProduct(productId, sellerId);
+      Seller expectedSeller = createTestSeller(sellerId);
+
+      when(productRepository.getById(productId)).thenReturn(Optional.of(expectedProduct));
+      when(productRepository.getSellerById(sellerId)).thenReturn(Optional.of(expectedSeller));
+
+      // Act
+      ProductWithSeller result = productService.getProductWithSeller(productId);
+
+      // Assert
+      assertThat(result).isNotNull();
+      assertThat(result.product()).isEqualTo(expectedProduct);
+      assertThat(result.seller()).isEqualTo(expectedSeller);
+
+      verify(productRepository).getById(productId);
+      verify(productRepository).getSellerById(sellerId);
+      verifyNoMoreInteractions(productRepository);
     }
 
-    // Test data factory methods
-    private Product createTestProduct(String id, String sellerId) {
-        return Product.create(
-            id,
-            "Test Product",
-            "Test Brand",
-            "Test Category",
-            new Money(999.99, "BRL"),
-            "http://example.com/thumbnail.jpg",
-            List.of("http://example.com/pic1.jpg", "http://example.com/pic2.jpg"),
-            Map.of("Color", "Blue", "Size", "L"),
-            10,
-            sellerId
-        );
+    @Test
+    @DisplayName("should return ProductWithSeller with null seller when seller does not exist")
+    void shouldReturnProductWithNullSellerWhenSellerDoesNotExist() {
+      // Arrange
+      String productId = "PRODUCT_001";
+      String sellerId = "SELLER_001";
+      Product expectedProduct = createTestProduct(productId, sellerId);
+
+      when(productRepository.getById(productId)).thenReturn(Optional.of(expectedProduct));
+      when(productRepository.getSellerById(sellerId)).thenReturn(Optional.empty());
+
+      // Act
+      ProductWithSeller result = productService.getProductWithSeller(productId);
+
+      // Assert
+      assertThat(result).isNotNull();
+      assertThat(result.product()).isEqualTo(expectedProduct);
+      assertThat(result.seller()).isNull();
+
+      verify(productRepository).getById(productId);
+      verify(productRepository).getSellerById(sellerId);
+      verifyNoMoreInteractions(productRepository);
+    }
+  }
+
+  @Nested
+  @DisplayName("getProductWithSeller() - Error Path")
+  class GetProductWithSellerErrorPath {
+
+    @Test
+    @DisplayName("should throw NotFoundException when product does not exist")
+    void shouldThrowNotFoundExceptionWhenProductDoesNotExist() {
+      // Arrange
+      String nonExistentProductId = "NON_EXISTENT";
+      when(productRepository.getById(nonExistentProductId)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      assertThatThrownBy(() -> productService.getProductWithSeller(nonExistentProductId))
+          .isInstanceOf(NotFoundException.class)
+          .hasMessage("Product not found");
+
+      verify(productRepository).getById(nonExistentProductId);
+      verify(productRepository, never()).getSellerById(any());
+      verifyNoMoreInteractions(productRepository);
     }
 
-    private Seller createTestSeller(String id) {
-        return new Seller(id, "TestSeller_" + id, 4.8);
+    @Test
+    @DisplayName("should throw NotFoundException with null productId")
+    void shouldThrowNotFoundExceptionWithNullProductId() {
+      // Arrange
+      when(productRepository.getById(null)).thenReturn(Optional.empty());
+
+      // Act & Assert
+      assertThatThrownBy(() -> productService.getProductWithSeller(null))
+          .isInstanceOf(NotFoundException.class)
+          .hasMessage("Product not found");
+
+      verify(productRepository).getById(null);
+      verify(productRepository, never()).getSellerById(any());
+      verifyNoMoreInteractions(productRepository);
+    }
+  }
+
+  @Nested
+  @DisplayName("getRecommendations() - Happy Path")
+  class GetRecommendationsHappyPath {
+
+    @Test
+    @DisplayName("should return recommendations when they exist")
+    void shouldReturnRecommendationsWhenTheyExist() {
+      // Arrange
+      String productId = "PRODUCT_001";
+      int limit = 5;
+      List<Product> expectedRecommendations = List.of(
+          createTestProduct("REC_001", "SELLER_002"),
+          createTestProduct("REC_002", "SELLER_003"),
+          createTestProduct("REC_003", "SELLER_004"));
+
+      when(productRepository.recommendations(productId, limit))
+          .thenReturn(expectedRecommendations);
+
+      // Act
+      List<Product> result = productService.getRecommendations(productId, limit);
+
+      // Assert
+      assertThat(result)
+          .isNotNull()
+          .hasSize(3)
+          .containsExactlyElementsOf(expectedRecommendations);
+
+      verify(productRepository).recommendations(productId, limit);
+      verifyNoMoreInteractions(productRepository);
     }
 
-    @Nested
-    @DisplayName("getProductWithSeller() - Happy Path")
-    class GetProductWithSellerHappyPath {
+    @Test
+    @DisplayName("should return empty list when no recommendations exist")
+    void shouldReturnEmptyListWhenNoRecommendationsExist() {
+      // Arrange
+      String productId = "PRODUCT_ISOLATED";
+      int limit = 5;
 
-        @Test
-        @DisplayName("should return ProductWithSeller when product and seller exist")
-        void shouldReturnProductWithSellerWhenBothExist() {
-            // Arrange
-            String productId = "PRODUCT_001";
-            String sellerId = "SELLER_001";
-            Product expectedProduct = createTestProduct(productId, sellerId);
-            Seller expectedSeller = createTestSeller(sellerId);
+      when(productRepository.recommendations(productId, limit))
+          .thenReturn(List.of());
 
-            when(productRepository.getById(productId)).thenReturn(Optional.of(expectedProduct));
-            when(productRepository.getSellerById(sellerId)).thenReturn(Optional.of(expectedSeller));
+      // Act
+      List<Product> result = productService.getRecommendations(productId, limit);
 
-            // Act
-            ProductWithSeller result = productService.getProductWithSeller(productId);
+      // Assert
+      assertThat(result)
+          .isNotNull()
+          .isEmpty();
 
-            // Assert
-            assertThat(result).isNotNull();
-            assertThat(result.product()).isEqualTo(expectedProduct);
-            assertThat(result.seller()).isEqualTo(expectedSeller);
+      verify(productRepository).recommendations(productId, limit);
+      verifyNoMoreInteractions(productRepository);
+    }
+  }
 
-            verify(productRepository).getById(productId);
-            verify(productRepository).getSellerById(sellerId);
-            verifyNoMoreInteractions(productRepository);
-        }
+  @Nested
+  @DisplayName("getRecommendations() - Boundaries")
+  class GetRecommendationsBoundaries {
 
-        @Test
-        @DisplayName("should return ProductWithSeller with null seller when seller does not exist")
-        void shouldReturnProductWithNullSellerWhenSellerDoesNotExist() {
-            // Arrange
-            String productId = "PRODUCT_001";
-            String sellerId = "SELLER_001";
-            Product expectedProduct = createTestProduct(productId, sellerId);
+    @ParameterizedTest
+    @MethodSource("limitBoundaryValues")
+    @DisplayName("should handle different limit boundary values correctly")
+    void shouldHandleLimitBoundaryValuesCorrectly(int limit, int expectedCallLimit) {
+      // Arrange
+      String productId = "PRODUCT_001";
+      List<Product> mockRecommendations = List.of(createTestProduct("REC_001", "SELLER_001"));
 
-            when(productRepository.getById(productId)).thenReturn(Optional.of(expectedProduct));
-            when(productRepository.getSellerById(sellerId)).thenReturn(Optional.empty());
+      when(productRepository.recommendations(productId, expectedCallLimit))
+          .thenReturn(mockRecommendations);
 
-            // Act
-            ProductWithSeller result = productService.getProductWithSeller(productId);
+      // Act
+      List<Product> result = productService.getRecommendations(productId, limit);
 
-            // Assert
-            assertThat(result).isNotNull();
-            assertThat(result.product()).isEqualTo(expectedProduct);
-            assertThat(result.seller()).isNull();
-
-            verify(productRepository).getById(productId);
-            verify(productRepository).getSellerById(sellerId);
-            verifyNoMoreInteractions(productRepository);
-        }
+      // Assert
+      assertThat(result).isNotNull();
+      verify(productRepository).recommendations(productId, expectedCallLimit);
+      verifyNoMoreInteractions(productRepository);
     }
 
-    @Nested
-    @DisplayName("getProductWithSeller() - Error Path")
-    class GetProductWithSellerErrorPath {
+    static Stream<Arguments> limitBoundaryValues() {
+      return Stream.of(
+          Arguments.of(0, 0), // Zero limit
+          Arguments.of(1, 1), // Minimum positive limit
+          Arguments.of(10, 10), // Normal limit
+          Arguments.of(100, 100), // Large limit
+          Arguments.of(-1, -1) // Negative limit (delegates to repository)
+      );
+    }
+  }
 
-        @Test
-        @DisplayName("should throw NotFoundException when product does not exist")
-        void shouldThrowNotFoundExceptionWhenProductDoesNotExist() {
-            // Arrange
-            String nonExistentProductId = "NON_EXISTENT";
-            when(productRepository.getById(nonExistentProductId)).thenReturn(Optional.empty());
+  @Nested
+  @DisplayName("Integration scenarios")
+  class IntegrationScenarios {
 
-            // Act & Assert
-            assertThatThrownBy(() -> productService.getProductWithSeller(nonExistentProductId))
-                .isInstanceOf(NotFoundException.class)
-                .hasMessage("Product not found");
+    @Test
+    @DisplayName("should handle complete product lifecycle operations")
+    void shouldHandleCompleteProductLifecycleOperations() {
+      // Arrange
+      String productId = "PRODUCT_LIFECYCLE";
+      String sellerId = "SELLER_LIFECYCLE";
+      Product product = createTestProduct(productId, sellerId);
+      Seller seller = createTestSeller(sellerId);
 
-            verify(productRepository).getById(nonExistentProductId);
-            verify(productRepository, never()).getSellerById(any());
-            verifyNoMoreInteractions(productRepository);
-        }
+      // Setup mocks for different operations
+      when(productRepository.getById(productId)).thenReturn(Optional.of(product));
+      when(productRepository.getSellerById(sellerId)).thenReturn(Optional.of(seller));
+      when(productRepository.recommendations(productId, 5))
+          .thenReturn(List.of(createTestProduct("REC_001", "SELLER_002")));
 
-        @Test
-        @DisplayName("should throw NotFoundException with null productId")
-        void shouldThrowNotFoundExceptionWithNullProductId() {
-            // Arrange
-            when(productRepository.getById(null)).thenReturn(Optional.empty());
 
-            // Act & Assert
-            assertThatThrownBy(() -> productService.getProductWithSeller(null))
-                .isInstanceOf(NotFoundException.class)
-                .hasMessage("Product not found");
+      // Act - Perform multiple operations
+      ProductWithSeller productDetail = productService.getProductWithSeller(productId);
+      List<Product> recommendations = productService.getRecommendations(productId, 5);
+  
 
-            verify(productRepository).getById(null);
-            verify(productRepository, never()).getSellerById(any());
-            verifyNoMoreInteractions(productRepository);
-        }
+      // Assert
+      assertThat(productDetail.product()).isEqualTo(product);
+      assertThat(productDetail.seller()).isEqualTo(seller);
+      assertThat(recommendations).hasSize(1);
+
+      // Verify all interactions
+      verify(productRepository).getById(productId);
+      verify(productRepository).getSellerById(sellerId);
+      verify(productRepository).recommendations(productId, 5);
+
+      verifyNoMoreInteractions(productRepository);
     }
 
-    @Nested
-    @DisplayName("getRecommendations() - Happy Path")
-    class GetRecommendationsHappyPath {
+    @Test
+    @DisplayName("should maintain consistent behavior across multiple calls")
+    void shouldMaintainConsistentBehaviorAcrossMultipleCalls() {
+      // Arrange
+      String productId = "CONSISTENT_PRODUCT";
+      when(productRepository.recommendations(productId, 3))
+          .thenReturn(List.of(createTestProduct("REC_001", "SELLER_001")));
 
-        @Test
-        @DisplayName("should return recommendations when they exist")
-        void shouldReturnRecommendationsWhenTheyExist() {
-            // Arrange
-            String productId = "PRODUCT_001";
-            int limit = 5;
-            List<Product> expectedRecommendations = List.of(
-                createTestProduct("REC_001", "SELLER_002"),
-                createTestProduct("REC_002", "SELLER_003"),
-                createTestProduct("REC_003", "SELLER_004")
-            );
+      // Act - Multiple calls to the same operation
+      List<Product> firstCall = productService.getRecommendations(productId, 3);
+      List<Product> secondCall = productService.getRecommendations(productId, 3);
+      List<Product> thirdCall = productService.getRecommendations(productId, 3);
 
-            when(productRepository.recommendations(productId, limit))
-                .thenReturn(expectedRecommendations);
+      // Assert - All calls should return the same result
+      assertThat(firstCall).isEqualTo(secondCall).isEqualTo(thirdCall);
+      assertThat(firstCall).hasSize(1);
 
-            // Act
-            List<Product> result = productService.getRecommendations(productId, limit);
-
-            // Assert
-            assertThat(result)
-                .isNotNull()
-                .hasSize(3)
-                .containsExactlyElementsOf(expectedRecommendations);
-
-            verify(productRepository).recommendations(productId, limit);
-            verifyNoMoreInteractions(productRepository);
-        }
-
-        @Test
-        @DisplayName("should return empty list when no recommendations exist")
-        void shouldReturnEmptyListWhenNoRecommendationsExist() {
-            // Arrange
-            String productId = "PRODUCT_ISOLATED";
-            int limit = 5;
-
-            when(productRepository.recommendations(productId, limit))
-                .thenReturn(List.of());
-
-            // Act
-            List<Product> result = productService.getRecommendations(productId, limit);
-
-            // Assert
-            assertThat(result)
-                .isNotNull()
-                .isEmpty();
-
-            verify(productRepository).recommendations(productId, limit);
-            verifyNoMoreInteractions(productRepository);
-        }
+      // Verify repository was called exactly 3 times
+      verify(productRepository, times(3)).recommendations(productId, 3);
+      verifyNoMoreInteractions(productRepository);
     }
-
-    @Nested
-    @DisplayName("getRecommendations() - Boundaries")
-    class GetRecommendationsBoundaries {
-
-        @ParameterizedTest
-        @MethodSource("limitBoundaryValues")
-        @DisplayName("should handle different limit boundary values correctly")
-        void shouldHandleLimitBoundaryValuesCorrectly(int limit, int expectedCallLimit) {
-            // Arrange
-            String productId = "PRODUCT_001";
-            List<Product> mockRecommendations = List.of(createTestProduct("REC_001", "SELLER_001"));
-
-            when(productRepository.recommendations(productId, expectedCallLimit))
-                .thenReturn(mockRecommendations);
-
-            // Act
-            List<Product> result = productService.getRecommendations(productId, limit);
-
-            // Assert
-            assertThat(result).isNotNull();
-            verify(productRepository).recommendations(productId, expectedCallLimit);
-            verifyNoMoreInteractions(productRepository);
-        }
-
-        static Stream<Arguments> limitBoundaryValues() {
-            return Stream.of(
-                Arguments.of(0, 0),      // Zero limit
-                Arguments.of(1, 1),      // Minimum positive limit
-                Arguments.of(10, 10),    // Normal limit
-                Arguments.of(100, 100),  // Large limit
-                Arguments.of(-1, -1)     // Negative limit (delegates to repository)
-            );
-        }
-    }
-
-    @Nested
-    @DisplayName("getSearch() - Happy Path")
-    class GetSearchHappyPath {
-
-        @Test
-        @DisplayName("should return search results when products match query")
-        void shouldReturnSearchResultsWhenProductsMatchQuery() {
-            // Arrange
-            String query = "smartphone";
-            int limit = 10;
-            int offset = 0;
-
-            List<Product> matchingProducts = List.of(
-                createTestProduct("PHONE_001", "SELLER_001"),
-                createTestProduct("PHONE_002", "SELLER_002")
-            );
-            SearchResult expectedResult = new SearchResult(matchingProducts, 2);
-
-            when(productRepository.search(query, limit, offset))
-                .thenReturn(expectedResult);
-
-            // Act
-            SearchResult result = productService.getSearch(query, limit, offset);
-
-            // Assert
-            assertThat(result).isNotNull();
-            assertThat(result.items())
-                .hasSize(2)
-                .containsExactlyElementsOf(matchingProducts);
-            assertThat(result.total()).isEqualTo(2);
-
-            verify(productRepository).search(query, limit, offset);
-            verifyNoMoreInteractions(productRepository);
-        }
-
-        @Test
-        @DisplayName("should return empty search results when no products match query")
-        void shouldReturnEmptySearchResultsWhenNoProductsMatchQuery() {
-            // Arrange
-            String query = "nonexistent";
-            int limit = 10;
-            int offset = 0;
-            SearchResult expectedResult = new SearchResult(List.of(), 0);
-
-            when(productRepository.search(query, limit, offset))
-                .thenReturn(expectedResult);
-
-            // Act
-            SearchResult result = productService.getSearch(query, limit, offset);
-
-            // Assert
-            assertThat(result).isNotNull();
-            assertThat(result.items()).isEmpty();
-            assertThat(result.total()).isZero();
-
-            verify(productRepository).search(query, limit, offset);
-            verifyNoMoreInteractions(productRepository);
-        }
-
-        @Test
-        @DisplayName("should handle null query correctly")
-        void shouldHandleNullQueryCorrectly() {
-            // Arrange
-            String query = null;
-            int limit = 10;
-            int offset = 0;
-            SearchResult expectedResult = new SearchResult(
-                List.of(createTestProduct("ALL_001", "SELLER_001")), 
-                1
-            );
-
-            when(productRepository.search(query, limit, offset))
-                .thenReturn(expectedResult);
-
-            // Act
-            SearchResult result = productService.getSearch(query, limit, offset);
-
-            // Assert
-            assertThat(result).isNotNull();
-            assertThat(result.items()).hasSize(1);
-            assertThat(result.total()).isEqualTo(1);
-
-            verify(productRepository).search(query, limit, offset);
-            verifyNoMoreInteractions(productRepository);
-        }
-
-        @Test
-        @DisplayName("should handle empty query correctly")
-        void shouldHandleEmptyQueryCorrectly() {
-            // Arrange
-            String query = "";
-            int limit = 10;
-            int offset = 0;
-            SearchResult expectedResult = new SearchResult(
-                List.of(createTestProduct("ALL_001", "SELLER_001")), 
-                1
-            );
-
-            when(productRepository.search(query, limit, offset))
-                .thenReturn(expectedResult);
-
-            // Act
-            SearchResult result = productService.getSearch(query, limit, offset);
-
-            // Assert
-            assertThat(result).isNotNull();
-            assertThat(result.items()).hasSize(1);
-            assertThat(result.total()).isEqualTo(1);
-
-            verify(productRepository).search(query, limit, offset);
-            verifyNoMoreInteractions(productRepository);
-        }
-    }
-
-    @Nested
-    @DisplayName("getSearch() - Boundaries")
-    class GetSearchBoundaries {
-
-        @ParameterizedTest
-        @MethodSource("paginationBoundaryValues")
-        @DisplayName("should handle pagination boundary values correctly")
-        void shouldHandlePaginationBoundaryValuesCorrectly(int limit, int offset, String description) {
-            // Arrange
-            String query = "test";
-            SearchResult mockResult = new SearchResult(List.of(), 0);
-
-            when(productRepository.search(query, limit, offset))
-                .thenReturn(mockResult);
-
-            // Act
-            SearchResult result = productService.getSearch(query, limit, offset);
-
-            // Assert
-            assertThat(result).isNotNull();
-            verify(productRepository).search(query, limit, offset);
-            verifyNoMoreInteractions(productRepository);
-        }
-
-        static Stream<Arguments> paginationBoundaryValues() {
-            return Stream.of(
-                Arguments.of(0, 0, "Zero limit and offset"),
-                Arguments.of(1, 0, "Minimum limit, zero offset"),
-                Arguments.of(10, 0, "Normal limit, zero offset"),
-                Arguments.of(10, 10, "Normal limit and offset"),
-                Arguments.of(100, 0, "Large limit, zero offset"),
-                Arguments.of(10, 100, "Normal limit, large offset"),
-                Arguments.of(-1, 0, "Negative limit"),
-                Arguments.of(10, -1, "Negative offset"),
-                Arguments.of(-1, -1, "Both negative")
-            );
-        }
-    }
-
-    @Nested
-    @DisplayName("Integration scenarios")
-    class IntegrationScenarios {
-
-        @Test
-        @DisplayName("should handle complete product lifecycle operations")
-        void shouldHandleCompleteProductLifecycleOperations() {
-            // Arrange
-            String productId = "PRODUCT_LIFECYCLE";
-            String sellerId = "SELLER_LIFECYCLE";
-            Product product = createTestProduct(productId, sellerId);
-            Seller seller = createTestSeller(sellerId);
-
-            // Setup mocks for different operations
-            when(productRepository.getById(productId)).thenReturn(Optional.of(product));
-            when(productRepository.getSellerById(sellerId)).thenReturn(Optional.of(seller));
-            when(productRepository.recommendations(productId, 5))
-                .thenReturn(List.of(createTestProduct("REC_001", "SELLER_002")));
-            when(productRepository.search("lifecycle", 10, 0))
-                .thenReturn(new SearchResult(List.of(product), 1));
-
-            // Act - Perform multiple operations
-            ProductWithSeller productDetail = productService.getProductWithSeller(productId);
-            List<Product> recommendations = productService.getRecommendations(productId, 5);
-            SearchResult searchResults = productService.getSearch("lifecycle", 10, 0);
-
-            // Assert
-            assertThat(productDetail.product()).isEqualTo(product);
-            assertThat(productDetail.seller()).isEqualTo(seller);
-            assertThat(recommendations).hasSize(1);
-            assertThat(searchResults.items()).contains(product);
-            assertThat(searchResults.total()).isEqualTo(1);
-
-            // Verify all interactions
-            verify(productRepository).getById(productId);
-            verify(productRepository).getSellerById(sellerId);
-            verify(productRepository).recommendations(productId, 5);
-            verify(productRepository).search("lifecycle", 10, 0);
-            verifyNoMoreInteractions(productRepository);
-        }
-
-        @Test
-        @DisplayName("should maintain consistent behavior across multiple calls")
-        void shouldMaintainConsistentBehaviorAcrossMultipleCalls() {
-            // Arrange
-            String productId = "CONSISTENT_PRODUCT";
-            when(productRepository.recommendations(productId, 3))
-                .thenReturn(List.of(createTestProduct("REC_001", "SELLER_001")));
-
-            // Act - Multiple calls to the same operation
-            List<Product> firstCall = productService.getRecommendations(productId, 3);
-            List<Product> secondCall = productService.getRecommendations(productId, 3);
-            List<Product> thirdCall = productService.getRecommendations(productId, 3);
-
-            // Assert - All calls should return the same result
-            assertThat(firstCall).isEqualTo(secondCall).isEqualTo(thirdCall);
-            assertThat(firstCall).hasSize(1);
-
-            // Verify repository was called exactly 3 times
-            verify(productRepository, times(3)).recommendations(productId, 3);
-            verifyNoMoreInteractions(productRepository);
-        }
-    }
+  }
 }

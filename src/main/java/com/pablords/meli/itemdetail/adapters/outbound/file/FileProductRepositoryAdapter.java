@@ -6,7 +6,6 @@ import com.github.benmanes.caffeine.cache.*;
 import com.pablords.meli.itemdetail.domain.entity.Product;
 import com.pablords.meli.itemdetail.domain.ports.outbound.repository.ProductRepositoryPort;
 import com.pablords.meli.itemdetail.domain.valueobject.Money;
-import com.pablords.meli.itemdetail.domain.valueobject.SearchResult;
 import com.pablords.meli.itemdetail.domain.valueobject.Seller;
 
 import java.io.*;
@@ -22,7 +21,6 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class FileProductRepositoryAdapter implements ProductRepositoryPort {
   private final Map<String, Product> byId = new ConcurrentHashMap<>();
-  private final Map<String, Set<String>> tokens = new ConcurrentHashMap<>();
   private final Map<String, Set<String>> byCategory = new ConcurrentHashMap<>();
   private final Map<String, Set<String>> byBrand = new ConcurrentHashMap<>();
   private final Map<String, Seller> sellers = new ConcurrentHashMap<>();
@@ -36,6 +34,7 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
   long ttl;
 
   public FileProductRepositoryAdapter() {
+    // Construtor intencionalmente vazio: inicialização ocorre em @PostConstruct (cache + carga de dataset)
   }
 
   @PostConstruct
@@ -54,22 +53,7 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
     return Optional.ofNullable(p);
   }
 
-  public SearchResult search(String q, int limit, int offset) {
-    Set<String> ids = new LinkedHashSet<>();
-    if (q == null || q.isBlank()) {
-      ids.addAll(byId.keySet());
-    } else {
-      for (var t : tokenize(q)) {
-        var set = tokens.get(t);
-        if (set != null)
-          ids.addAll(set);
-      }
-    }
-    var all = ids.stream().map(byId::get).filter(Objects::nonNull).toList();
-    int total = all.size();
-    var page = all.stream().skip(offset).limit(limit).toList();
-    return new SearchResult(page, total);
-  }
+
 
   public List<Product> recommendations(String id, int limit) {
     var p = byId.get(id);
@@ -92,10 +76,8 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
       List<Map<String, Object>> raw = om.readValue(pIs, new TypeReference<>() {
       });
       for (var rp : raw) {
-        var p = mapProduct(om, rp);
+  var p = mapProduct(rp);
         byId.put(p.getId(), p);
-        for (var tok : tokenize(p.getTitle()))
-          tokens.computeIfAbsent(tok, k -> new LinkedHashSet<>()).add(p.getId());
         byCategory.computeIfAbsent(p.getCategory().toLowerCase(), k -> new LinkedHashSet<>()).add(p.getId());
         byBrand.computeIfAbsent(p.getBrand().toLowerCase(), k -> new LinkedHashSet<>()).add(p.getId());
       }
@@ -104,8 +86,13 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
       for (var s : ss)
         sellers.put(s.id(), s);
     } catch (IOException e) {
-      throw new RuntimeException("Failed to load dataset", e);
+      throw new DatasetLoadException("Failed to load dataset", e);
     }
+  }
+
+  // Exceção específica para falhas de carregamento do dataset
+  static class DatasetLoadException extends RuntimeException {
+    DatasetLoadException(String msg, Throwable cause) { super(msg, cause); }
   }
 
   private static InputStream getResource(String path) {
@@ -116,7 +103,7 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
   }
 
   @SuppressWarnings("unchecked")
-  private static Product mapProduct(ObjectMapper om, Map<String, Object> rp) {
+  private static Product mapProduct(Map<String, Object> rp) {
     String id = (String) rp.get("id");
     String title = (String) rp.get("title");
     String brand = (String) rp.get("brand");
@@ -135,7 +122,4 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
     return Product.create(id, title, brand, category, money, thumbnail, pictures, attrs, available, sellerId);
   }
 
-  private static List<String> tokenize(String s) {
-    return Arrays.stream(s.toLowerCase().split("[^a-z0-9á-ú]+")).filter(t -> !t.isBlank()).toList();
-  }
 }
