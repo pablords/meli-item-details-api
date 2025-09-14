@@ -34,8 +34,6 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
   long ttl;
 
   public FileProductRepositoryAdapter() {
-    // Construtor intencionalmente vazio: inicialização ocorre em @PostConstruct
-    // (cache + carga de dataset)
   }
 
   @PostConstruct
