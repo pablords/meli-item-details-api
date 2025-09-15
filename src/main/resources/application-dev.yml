@@ -2,4 +2,4 @@
 spring:
   logging:
     level:
-      root: INFO  # Desliga todos os logs
+      root: INFO  

@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.PriceResponseDTO;
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.ProductResponseDTO;
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.RecommendationResponseDTO;
+import com.pablords.meli.itemdetail.adapters.inbound.http.dto.ReviewResponseDTO;
 import com.pablords.meli.itemdetail.adapters.inbound.http.dto.SellerResponseDTO;
 import com.pablords.meli.itemdetail.domain.application.ports.inbound.service.ProductServicePort;
 import com.pablords.meli.itemdetail.domain.entity.Product;
+import com.pablords.meli.itemdetail.domain.valueobject.RatingSummary;
+import com.pablords.meli.itemdetail.domain.valueobject.ReviewSort;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -73,6 +76,31 @@ public class ProductController implements ProductSwagger {
     log.info("Product recommendations fetched successfully for id: {}", id);
     return ResponseEntity.status(HttpStatus.OK)
         .body(Map.of("items", items.stream().map(RecommendationResponseDTO::from).toList()));
+  }
+
+  @GetMapping("/{id}/reviews")
+  public ResponseEntity<ReviewResponseDTO> reviews(@PathVariable String id,
+      @RequestParam(defaultValue = "recent") String sort,
+      @RequestParam(defaultValue = "2") @Min(1) @Max(100) int limit,
+      @RequestParam(defaultValue = "0") @Min(0) int offset) {
+    log.info("Fetching reviews for product {} with sort {} and pagination {}:{}", id, sort, limit, offset);
+    var s = switch (sort.toLowerCase()) {
+      case "helpful" -> ReviewSort.HELPFUL;
+      case "rating_desc" -> ReviewSort.RATING_DESC;
+      case "rating_asc" -> ReviewSort.RATING_ASC;
+      default -> ReviewSort.RECENT;
+    };
+    var page = productService.getReviewsByProduct(id, s, limit, offset);
+    log.info("Fetched {} reviews for product {} with sort {} and pagination {}:{}", page.items().size(), id, sort, limit, offset);
+    return ResponseEntity.status(HttpStatus.OK).body(new ReviewResponseDTO(page));
+  }
+
+  @GetMapping("/{id}/ratings")
+  public ResponseEntity<RatingSummary> rating(@PathVariable String id) {
+    log.info("Fetching rating summary for product {}", id);
+    var summary = productService.getRatingSummaryByProduct(id);
+    log.info("Fetched rating summary for product {}: {}", id, summary);
+    return ResponseEntity.status(HttpStatus.OK).body(summary);
   }
 
 }

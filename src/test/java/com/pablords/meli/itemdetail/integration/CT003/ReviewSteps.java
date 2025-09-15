@@ -27,7 +27,7 @@ public class ReviewSteps {
 
   @Quando("eu solicito as avaliações de produtos para o id {string}")
   public void eu_solicito_as_avaliacoes_para_o_id(String id) throws Exception {
-    this.REVIEW_API_URL = "/reviews/products/" + id;
+    this.REVIEW_API_URL = "/products/" + id + "/reviews";
     System.out.println("Fazendo chamada para URL: " + REVIEW_API_URL);
     mockMvc.perform(get(REVIEW_API_URL)
         .contentType(MediaType.APPLICATION_JSON))

@@ -8,14 +8,14 @@ Funcionalidade: Obter avaliações de produtos
 
   @success
   Cenário: Obtendo avaliações de produtos com sucesso
-    Dado que estou no endpoint da API de avaliações "/reviews/products/{id}" com id "MLB001"
+    Dado que estou no endpoint da API de avaliações "/products/{id}/reviews" com id "MLB001"
     Quando eu solicito as avaliações de produtos para o id "MLB001"
     Então o status da resposta de avaliações deve ser 200
     E a resposta deve conter uma lista de avaliações de produtos com 2 itens
 
   @fail
   Cenário: Falha ao obter avaliações de produtos - []
-    Dado que estou no endpoint da API de avaliações "/reviews/products/{id}" com id "99999"
+    Dado que estou no endpoint da API de avaliações "/products/{id}/reviews" com id "99999"
     Quando eu solicito as avaliações de produtos para o id "99999"
     Então o status da resposta de avaliações deve ser 200
     E a resposta deve conter uma lista vazia de avaliações de produtos

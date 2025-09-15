@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,14 +24,22 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.pablords.meli.itemdetail.domain.application.exception.NotFoundException;
 import com.pablords.meli.itemdetail.domain.application.service.ProductService;
 import com.pablords.meli.itemdetail.domain.entity.Product;
+import com.pablords.meli.itemdetail.domain.entity.Review;
 import com.pablords.meli.itemdetail.domain.ports.outbound.repository.ProductRepositoryPort;
+import com.pablords.meli.itemdetail.domain.ports.outbound.repository.ReviewRepositoryPort;
 import com.pablords.meli.itemdetail.domain.valueobject.Money;
 import com.pablords.meli.itemdetail.domain.valueobject.ProductWithSeller;
+import com.pablords.meli.itemdetail.domain.valueobject.ReviewSort;
 import com.pablords.meli.itemdetail.domain.valueobject.Seller;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ProductService Unit Tests")
 class ProductServiceTest {
+
+  private List<Review> reviews;
+
+  @Mock
+  private ReviewRepositoryPort reviewRepository;
 
   @Mock
   private ProductRepositoryPort productRepository;
@@ -39,12 +48,11 @@ class ProductServiceTest {
 
   @BeforeEach
   void setUp() {
-    productService = new ProductService(productRepository);
+    productService = new ProductService(productRepository, reviewRepository);
   }
 
   // Test data factory methods
   private Product createTestProduct(String id, String sellerId) {
-
     return Product.builder(id, "Test Product", sellerId)
         .brand("Test Brand")
         .price(new Money(999.99, "BRL"))
@@ -260,11 +268,9 @@ class ProductServiceTest {
       when(productRepository.recommendations(productId, 5))
           .thenReturn(List.of(createTestProduct("REC_001", "SELLER_002")));
 
-
       // Act - Perform multiple operations
       ProductWithSeller productDetail = productService.getProductWithSeller(productId);
       List<Product> recommendations = productService.getRecommendations(productId, 5);
-  
 
       // Assert
       assertThat(productDetail.product()).isEqualTo(product);
@@ -299,6 +305,50 @@ class ProductServiceTest {
       // Verify repository was called exactly 3 times
       verify(productRepository, times(3)).recommendations(productId, 3);
       verifyNoMoreInteractions(productRepository);
+    }
+  }
+
+  @Nested
+  @DisplayName("should get reviews by product")
+  class getReviewsByProduct {
+    @DisplayName("should return paged reviews when successful")
+    @Test
+    void shouldReturnPagedReviewsWhenSuccessful() {
+      var review1 = Review.builder("1", "1", 3)
+          .title("first")
+          .author("author1")
+          .verifiedPurchase(false)
+          .helpfulVotes(0)
+          .createdAt(LocalDateTime.now().toString())
+          .locale("pt-BR")
+          .build();
+
+      var review2 = Review.builder("2", "1", 4)
+          .title("second")
+          .author("author2")
+          .verifiedPurchase(false)
+          .helpfulVotes(0)
+          .createdAt(LocalDateTime.now().toString())
+          .locale("pt-BR")
+          .build();
+
+      reviews = List.of(review1, review2);
+
+      when(reviewRepository.findByProduct("1", ReviewSort.RECENT, 2, 1)).thenReturn(reviews);
+      when(reviewRepository.totalByProduct("1")).thenReturn(2);
+      var result = productService.getReviewsByProduct("1", ReviewSort.RECENT, 2, 1);
+      assertThat(result).isNotNull();
+      assertThat(result.total()).isEqualTo(2);
+      assertThat(result.limit()).isEqualTo(2);
+      assertThat(result.offset()).isEqualTo(1);
+      assertThat(result.items())
+          .isNotNull()
+          .hasSize(2)
+          .extracting(Review::getId)
+          .containsExactly("1", "2");
+      verify(reviewRepository).findByProduct("1", ReviewSort.RECENT, 2, 1);
+      verify(reviewRepository).totalByProduct("1");
+      verifyNoMoreInteractions(reviewRepository);
     }
   }
 }
