@@ -11,7 +11,7 @@ import com.pablords.meli.itemdetail.domain.application.exception.NotFoundExcepti
 public class ExceptionStatusMapper {
 
   private static final Map<Class<? extends RuntimeException>, HttpStatus> EXCEPTION_STATUS_MAP = Map.of(
-      IllegalArgumentException.class, HttpStatus.CONFLICT,
+      IllegalArgumentException.class, HttpStatus.BAD_REQUEST,
       NotFoundException.class, HttpStatus.NOT_FOUND);
 
   public static HttpStatus getStatus(Class<? extends RuntimeException> exceptionClass) {

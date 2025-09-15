@@ -19,7 +19,7 @@ Hexagonal (Ports & Adapters):
 ## Endpoints principais
 - `GET /api/v1/products/{id}` — Detalhe do produto (inclui seller)
 - `GET /api/v1/products/{id}/recommendations?limit=6` — Recomendações por categoria/marca
-- `GET /api/v1/reviews/products/MLB001?sort=recent&limit=5&offset=5` - Reviews por produto
+- `GET /api/v1/products/{id}/reviews?sort=recent&limit=5&offset=5` - Reviews por produto
 - `GET /actuator/health` — Health check
 
 ## Dados e índices

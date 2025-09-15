@@ -103,17 +103,12 @@ curl -s 'http://localhost:8080/api/v1/products/MLB-001/recommendations?limit=6' 
 
 Reviews (ordenado por recentes):
 ```
-curl -s 'http://localhost:8080/api/v1/reviews/products/MLB-001?sort=recent&limit=5' | jq
+curl -s 'http://localhost:8080/api/v1/products/MLB-001/reviews?sort=recent&limit=5' | jq
 ```
 
 ### Estrutura de dados
 Arquivos fonte de dados em `src/main/resources/data/` carregados em memória na inicialização.
 
-### Atualização de dependências
-Ver versões propostas (sem atualizar efetivamente):
-```
-./mvnw versions:display-dependency-updates
-```
 
 ### Observabilidade (futuro)
 ADR específica (`ADR-007`) registra decisão de adiar instrumentação manual. Quando adicionar metrics/traces, revisar este runbook.
@@ -121,6 +116,4 @@ ADR específica (`ADR-007`) registra decisão de adiar instrumentação manual. 
 ### Fluxo CI/CD (resumo)
 Build → Testes (unit/component/integration) → Artefato → Docker Image → Deploy (placeholder). Detalhes no `README.md`.
 
----
-Manter este arquivo enxuto e operacional. Se crescer demais, considerar subdividir em: `run-local.md`, `run-docker.md`, `troubleshooting.md`.
 
