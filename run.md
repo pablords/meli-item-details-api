@@ -31,7 +31,7 @@ Perfil ativo padrão: `dev` (definido em `application.yml` se configurado). Para
 
 ### Endpoints úteis
 - Swagger UI: http://localhost:8080/api/v1/swagger-ui/index.html
-- Health: http://localhost:8080/actuator/health
+- Health: http://localhost:8080/api/v1/actuator/health
 
 ### Execução com Docker (produção simplificada)
 Sobe container com a aplicação empacotada:
