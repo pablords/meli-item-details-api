@@ -37,25 +37,25 @@ public class FileReviewRepositoryAdapter implements ReviewRepositoryPort {
 
   @Override
   public List<Review> findByProduct(String pid, ReviewSort sort, int limit, int offset) {
-    String key = key(pid);
+
     List<Review> base = switch (sort) {
-      case HELPFUL -> helpful.getOrDefault(key, List.of());
-      case RATING_DESC -> ratingDesc.getOrDefault(key, List.of());
-      case RATING_ASC -> ratingAsc.getOrDefault(key, List.of());
-      case RECENT -> recent.getOrDefault(key, List.of());
-      default -> recent.getOrDefault(key, List.of());
+      case HELPFUL -> helpful.getOrDefault(pid, List.of());
+      case RATING_DESC -> ratingDesc.getOrDefault(pid, List.of());
+      case RATING_ASC -> ratingAsc.getOrDefault(pid, List.of());
+      case RECENT -> recent.getOrDefault(pid, List.of());
+      default -> recent.getOrDefault(pid, List.of());
     };
     return base.stream().skip(offset).limit(limit).toList();
   }
 
   @Override
   public int totalByProduct(String pid) {
-    return recent.getOrDefault(key(pid), List.of()).size();
+    return recent.getOrDefault(pid, List.of()).size();
   }
 
   @Override
   public RatingSummary summaryFor(String pid) {
-    return summary.getOrDefault(key(pid), new RatingSummary(0, 0.0, Map.of()));
+    return summary.getOrDefault(pid, new RatingSummary(0, 0.0, Map.of()));
   }
 
   private void load(String path) {
@@ -66,7 +66,7 @@ public class FileReviewRepositoryAdapter implements ReviewRepositoryPort {
       Map<String, List<Review>> tmp = new HashMap<>();
       for (var r : rows) {
         var rev = map(r);
-        tmp.computeIfAbsent(key(rev.getProductId()), k -> new ArrayList<>()).add(rev);
+        tmp.computeIfAbsent(rev.getProductId(), k -> new ArrayList<>()).add(rev);
       }
       // recent/helpful
       for (var e : tmp.entrySet()) {
@@ -92,11 +92,6 @@ public class FileReviewRepositoryAdapter implements ReviewRepositoryPort {
     ReviewDatasetLoadException(String msg, Throwable cause) { super(msg, cause); }
   }
 
-  private static String key(String raw) {
-    if (raw == null)
-      return "";
-    return raw.replace("-", "").toUpperCase(Locale.ROOT);
-  }
 
   private static Review map(Map<String, Object> r) {
   return Review.builder(
