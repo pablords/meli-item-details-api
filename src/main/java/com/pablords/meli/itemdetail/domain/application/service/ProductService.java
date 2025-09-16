@@ -42,11 +42,6 @@ public class ProductService implements ProductServicePort {
     return recommendations;
   }
 
-  public List<Product> getRecommendationsFallback(String id, int limit, Exception ex) {
-    log.warn("Fallback triggered for getRecommendations with id: {} due to: {}", id, ex.getMessage());
-    return Collections.emptyList();
-  }
-
   public Paged<Review> getReviewsByProduct(String productId, ReviewSort sort, int limit, int offset) {
     log.info("Fetching reviews for product {} with sort {} and pagination {}:{}", productId, sort, limit, offset);
     var items = reviewRepository.findByProduct(productId, sort, limit, offset);

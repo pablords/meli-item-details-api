@@ -56,32 +56,32 @@ public class FileProductRepositoryAdapter implements ProductRepositoryPort {
     var p = byId.get(id);
     if (p == null)
       return List.of();
-    Set<String> cand = new LinkedHashSet<>();
-    cand.addAll(byCategory.getOrDefault(p.getCategory().toLowerCase(), Set.of()));
-    cand.addAll(byBrand.getOrDefault(p.getBrand().toLowerCase(), Set.of()));
-    cand.remove(id);
-    return cand.stream().limit(limit).map(byId::get).filter(Objects::nonNull).toList();
+    Set<String> candidates = new LinkedHashSet<>();
+    candidates.addAll(byCategory.getOrDefault(p.getCategory().toLowerCase(), Set.of()));
+    candidates.addAll(byBrand.getOrDefault(p.getBrand().toLowerCase(), Set.of()));
+    candidates.remove(id);
+    return candidates.stream().limit(limit).map(byId::get).filter(Objects::nonNull).toList();
   }
 
   public Optional<Seller> getSellerById(String id) {
     return Optional.ofNullable(sellers.get(id));
   }
 
-  private void load(String pRes, String sRes) {
+  private void load(String productsData, String sellersData) {
     ObjectMapper om = new ObjectMapper();
-    try (InputStream pIs = getResource(pRes); InputStream sIs = getResource(sRes)) {
-      List<Map<String, Object>> raw = om.readValue(pIs, new TypeReference<>() {
+    try (InputStream productInputStream = getResource(productsData); InputStream sellerInputStream = getResource(sellersData)) {
+      List<Map<String, Object>> productList = om.readValue(productInputStream, new TypeReference<>() {
       });
-      for (var rp : raw) {
-        var p = mapProduct(rp);
+      for (var product : productList) {
+        var p = mapProduct(product);
         byId.put(p.getId(), p);
         byCategory.computeIfAbsent(p.getCategory().toLowerCase(), k -> new LinkedHashSet<>()).add(p.getId());
         byBrand.computeIfAbsent(p.getBrand().toLowerCase(), k -> new LinkedHashSet<>()).add(p.getId());
       }
-      List<Seller> ss = om.readValue(sIs, new TypeReference<>() {
+      List<Seller> sellerList = om.readValue(sellerInputStream, new TypeReference<>() {
       });
-      for (var s : ss)
-        sellers.put(s.id(), s);
+      for (var seller : sellerList)
+        sellers.put(seller.id(), seller);
     } catch (IOException e) {
       throw new DatasetLoadException("Failed to load dataset", e);
     }
